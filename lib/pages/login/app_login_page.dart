@@ -71,7 +71,17 @@ class _AppLoginState extends State<AppLoginPage> {
                   width: double.infinity,
                   child: CupertinoButton(child: Text("登录"), onPressed: (){},color: Colors.amber,disabledColor: Colors.grey,),
                 ),
-                
+
+                Padding(padding: EdgeInsets.only(top: 20)),
+                Row(
+                  children: <Widget>[
+                    Text("登录即代表您已同意"),
+                    GestureDetector(
+                      child: Text("《龙之门大语文用户协议》",style: TextStyle(fontSize: 14,color: Colors.deepOrangeAccent),),
+                      onTap: (){},
+                    )
+                  ],
+                ),
 
               ],
             ),
