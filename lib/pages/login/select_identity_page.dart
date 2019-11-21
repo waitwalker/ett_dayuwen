@@ -22,13 +22,17 @@ class _SelectIdentityState extends State<SelectIdentityPage> {
     return StoreBuilder<AppState>(builder: (context, store) {
       return Scaffold(
         body: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            Padding(
-              padding: EdgeInsets.only(top: 100,left: 30),
+            Container(
+              alignment: Alignment.centerLeft,
               child: Text("欢迎加入龙之门大语文",style: TextStyle(fontSize: 25,color: Colors.black,fontWeight: FontWeight.w500),),
             ),
 
-            Expanded(child: ListView.builder(itemBuilder: _itemBuilder,itemCount: 2,),),
+            Container(
+              child: Expanded(
+                child: ListView.builder(itemBuilder: _itemBuilder,itemCount: 2,),),
+            ),
           ],
         ),
       );
@@ -36,12 +40,38 @@ class _SelectIdentityState extends State<SelectIdentityPage> {
   }
 
   Widget _itemBuilder(BuildContext context, int index) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.amber
+    return Padding(
+      padding: EdgeInsets.only(left: 25,right: 25),
+      child: Column(
+        children: <Widget>[
+          Container(height: 30,),
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.amber,
+              borderRadius: BorderRadius.circular(15),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.only(left: 20,bottom: 5,top: 5),
+                  child: Container(
+                    height: 100,
+                    width: 100,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                        image: AssetImage("lib/resources/images/student_avatar.png"),
+                      )
+                    ),
+                  ),
+                ),
+                Text("我是学生"),
+              ],
+            ),
+          ),
+        ],
       ),
-      width: MediaQuery.of(context).size.width - 60,
-      height: 120,
     );
   }
 }
