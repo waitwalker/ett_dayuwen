@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_aixue/common/redux/runtime_data_reducer.dart';
-import 'package:flutter_aixue/common/redux/theme_data_reducer.dart';
-import 'package:flutter_aixue/common/runtime_data/runtime_data.dart';
-import 'package:flutter_aixue/common/theme/mtt_theme.dart';
+import 'package:flutter_dayuwen/common/redux/runtime_data_reducer.dart';
+import 'package:flutter_dayuwen/common/redux/theme_data_reducer.dart';
+import 'package:flutter_dayuwen/common/runtime_data/runtime_data.dart';
+import 'package:flutter_dayuwen/common/theme/mtt_theme.dart';
 
 import 'local_reducer.dart';
 
