@@ -1,5 +1,4 @@
 
-import 'package:flutter_aixue/models/login_model.dart';
 
 ///
 /// @Class: 单例管理类
