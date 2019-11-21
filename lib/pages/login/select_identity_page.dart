@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_dayuwen/common/color/color.dart';
 import 'package:flutter_dayuwen/common/redux/app_state.dart';
+import 'package:flutter_dayuwen/pages/login/app_login_page.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
 ///
@@ -78,11 +79,9 @@ class _SelectIdentityState extends State<SelectIdentityPage> {
     Map map = dataSource[index];
     return GestureDetector(
       onTap: (){
-        if (index == 0) {
-
-        } else {
-          
-        }
+        Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context){
+          return AppLoginPage(index: index,);
+        }));
       },
       child: Padding(
         padding: EdgeInsets.only(left: 25,right: 25),
