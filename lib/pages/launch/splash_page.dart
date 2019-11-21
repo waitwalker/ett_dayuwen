@@ -1,12 +1,10 @@
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_aixue/common/locale/locale_mamager.dart';
-import 'package:flutter_aixue/common/redux/app_state.dart';
-import 'package:flutter_aixue/common/theme/theme_manager.dart';
-import 'package:flutter_aixue/main.dart';
-import 'package:flutter_aixue/pages/login_register/app_login_manager.dart';
-import 'package:flutter_aixue/pages/login_register/app_login_page.dart';
+import 'package:flutter_dayuwen/common/locale/locale_mamager.dart';
+import 'package:flutter_dayuwen/common/redux/app_state.dart';
+import 'package:flutter_dayuwen/common/theme/theme_manager.dart';
+import 'package:flutter_dayuwen/pages/login/app_login_manager.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -58,7 +56,7 @@ class SplashScreenState extends State<SplashPage>
   }
 
   void navigationPage() async {
-    await AppLoginManager.instance.autoLogin(context);
+    //await AppLoginManager.instance.autoLogin(context);
   }
 
   @override
