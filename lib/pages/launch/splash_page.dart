@@ -5,6 +5,7 @@ import 'package:flutter_dayuwen/common/locale/locale_mamager.dart';
 import 'package:flutter_dayuwen/common/redux/app_state.dart';
 import 'package:flutter_dayuwen/common/theme/theme_manager.dart';
 import 'package:flutter_dayuwen/pages/login/app_login_manager.dart';
+import 'package:flutter_dayuwen/pages/login/select_identity_page.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -57,6 +58,9 @@ class SplashScreenState extends State<SplashPage>
 
   void navigationPage() async {
     //await AppLoginManager.instance.autoLogin(context);
+    Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context){
+      return SelectIdentityPage();
+    }));
   }
 
   @override
