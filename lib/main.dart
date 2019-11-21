@@ -3,10 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dayuwen/common/redux/app_state.dart';
 import 'package:flutter_dayuwen/pages/launch/splash_page.dart';
 import 'package:flutter_dayuwen/pages/login/app_login_page.dart';
+import 'package:flutter_dayuwen/pages/placeholder/placeholder_page.dart';
+import 'package:flutter_dayuwen/pages/student_app/student_home_page.dart';
+import 'package:flutter_dayuwen/pages/teacher_home_page/teacher_home_page.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:redux/redux.dart';
 
+import 'common/database/database_manager.dart';
 import 'common/locale/localizations_delegate.dart';
+import 'common/runtime_data/runtime_data.dart';
+import 'common/theme/theme_manager.dart';
 
 ///
 /// @name main
