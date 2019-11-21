@@ -19,39 +19,44 @@ class AppLoginPage extends StatefulWidget {
 }
 
 class _AppLoginState extends State<AppLoginPage> {
+  FocusNode _contentFocusNode = FocusNode();
+  FocusNode _codeFocusNode = FocusNode();
   @override
   Widget build(BuildContext context) {
     return StoreBuilder<AppState>(builder: (context, store) {
-      return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          elevation: 0.0,
-          leading: GestureDetector(
-            child: Icon(Icons.arrow_back_ios),
-            onTap: (){
-              Navigator.of(context).pop();
-            },
+      return GestureDetector(
+        child: Scaffold(
+          appBar: AppBar(
+            backgroundColor: Colors.white,
+            elevation: 0.0,
+            leading: GestureDetector(
+              child: Icon(Icons.arrow_back_ios),
+              onTap: (){
+                Navigator.of(context).pop();
+              },
+            ),
           ),
-        ),
-        body: Padding(
-          padding: EdgeInsets.only(left: 40,right: 40,top: 30),
-          child: Column(
-            children: <Widget>[
-              Container(
-                alignment: Alignment.centerLeft,
-                child: Text(widget.index == 0 ? "学生登录" : "老师登录",style: TextStyle(fontSize: 25,fontWeight: FontWeight.w500),),),
-              Padding(padding: EdgeInsets.only(top: 40)),
-              TextField(
-                decoration: InputDecoration(
-                  prefixIcon: Icon(Icons.phone_iphone,color: Colors.grey,),
-                  hintText: "请输入手机号",
-                  hintStyle: TextStyle(color: Colors.grey)
+          body: Padding(
+            padding: EdgeInsets.only(left: 40,right: 40,top: 30),
+            child: Column(
+              children: <Widget>[
+                Container(
+                  alignment: Alignment.centerLeft,
+                  child: Text(widget.index == 0 ? "学生登录" : "老师登录",style: TextStyle(fontSize: 25,fontWeight: FontWeight.w500),),),
+                Padding(padding: EdgeInsets.only(top: 40)),
+                TextField(
+                  focusNode: _contentFocusNode,
+                  decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.phone_iphone,color: Colors.grey,),
+                      hintText: "请输入手机号",
+                      hintStyle: TextStyle(color: Colors.grey)
+                  ),
+                  keyboardType: TextInputType.phone,
+                  maxLength: 11,
                 ),
-                keyboardType: TextInputType.phone,
-                maxLength: 11,
-              ),
-              TextField(
-                decoration: InputDecoration(
+                TextField(
+                  focusNode: _codeFocusNode,
+                  decoration: InputDecoration(
                     prefixIcon: Icon(Icons.lock_outline,color: Colors.grey,),
                     hintText: "请输入验证码",
                     hintStyle: TextStyle(color: Colors.grey),
@@ -59,13 +64,18 @@ class _AppLoginState extends State<AppLoginPage> {
                       padding: EdgeInsets.only(right: 5),
                       child: GestureDetector(child: Text("获取验证码",style: TextStyle(fontSize: 15),),),
                     ),
+                  ),
+                  keyboardType: TextInputType.number,
+                  maxLength: 4,
                 ),
-                keyboardType: TextInputType.number,
-                maxLength: 4,
-              ),
-            ],
+              ],
+            ),
           ),
         ),
+        onTap: (){
+          _contentFocusNode.unfocus();
+          _codeFocusNode.unfocus();
+        },
       );
     });
   }
