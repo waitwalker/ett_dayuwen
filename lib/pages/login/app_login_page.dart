@@ -37,7 +37,32 @@ class _AppLoginState extends State<AppLoginPage> {
           padding: EdgeInsets.only(left: 40,right: 40,top: 30),
           child: Column(
             children: <Widget>[
-              Text(widget.index == 0 ? "学生登录" : "老师登录",style: TextStyle(fontSize: 30,fontWeight: FontWeight.w500),),
+              Container(
+                alignment: Alignment.centerLeft,
+                child: Text(widget.index == 0 ? "学生登录" : "老师登录",style: TextStyle(fontSize: 25,fontWeight: FontWeight.w500),),),
+              Padding(padding: EdgeInsets.only(top: 40)),
+              TextField(
+                decoration: InputDecoration(
+                  prefixIcon: Icon(Icons.phone_iphone,color: Colors.grey,),
+                  hintText: "请输入手机号",
+                  hintStyle: TextStyle(color: Colors.grey)
+                ),
+                keyboardType: TextInputType.phone,
+                maxLength: 11,
+              ),
+              TextField(
+                decoration: InputDecoration(
+                    prefixIcon: Icon(Icons.lock_outline,color: Colors.grey,),
+                    hintText: "请输入验证码",
+                    hintStyle: TextStyle(color: Colors.grey),
+                    suffix: Padding(
+                      padding: EdgeInsets.only(right: 5),
+                      child: GestureDetector(child: Text("获取验证码",style: TextStyle(fontSize: 15),),),
+                    ),
+                ),
+                keyboardType: TextInputType.number,
+                maxLength: 4,
+              ),
             ],
           ),
         ),
