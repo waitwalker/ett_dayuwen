@@ -1,5 +1,7 @@
 
 
+import 'package:flutter_dayuwen/pages/login/login_model.dart';
+
 ///
 /// @Class: 单例管理类
 /// @Description: 
