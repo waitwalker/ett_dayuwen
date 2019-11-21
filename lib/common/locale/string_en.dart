@@ -1,5 +1,4 @@
-
-import 'package:flutter_aixue/common/locale/string_base.dart';
+import 'package:flutter_dayuwen/common/locale/string_base.dart';
 
 class MTTStringEn extends MTTStringBase {
 

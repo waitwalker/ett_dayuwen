@@ -1,8 +1,8 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:flutter_aixue/common/locale/string_base.dart';
-import 'package:flutter_aixue/common/locale/string_en.dart';
-import 'package:flutter_aixue/common/locale/string_zh.dart';
+import 'package:flutter_dayuwen/common/locale/string_base.dart';
+import 'package:flutter_dayuwen/common/locale/string_en.dart';
+import 'package:flutter_dayuwen/common/locale/string_zh.dart';
 
 
 ///自定义多语言实现

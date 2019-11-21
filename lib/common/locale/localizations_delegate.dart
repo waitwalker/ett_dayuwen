@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_aixue/common/locale/localizations.dart';
+import 'package:flutter_dayuwen/common/locale/localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 
