@@ -6,7 +6,7 @@ import 'package:dio/dio.dart';
 import 'package:connectivity/connectivity.dart';
 import 'dart:io';
 import 'package:event_bus/event_bus.dart';
-import 'package:flutter_aixue/common/config/config.dart';
+import 'package:flutter_dayuwen/common/config/config.dart';
 
 ///
 /// @Class: NetworkManager
