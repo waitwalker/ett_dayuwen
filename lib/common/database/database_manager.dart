@@ -157,7 +157,7 @@ class DataBaseManager {
           kLastLoginTime,
           kCurrentLoginTime],
         where: '$kJid = ?', whereArgs: [jid]
-    );
+      );
     if (maps.length > 0) return LoginDatabaseModel.fromMap(maps.first);
     return null;
   }
@@ -227,7 +227,7 @@ class DataBaseManager {
 
 ///
 /// @name 登录数据库模型
-/// @description
+/// @description 
 /// @author lca
 /// @date 2019-10-28
 ///
