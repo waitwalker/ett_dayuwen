@@ -45,6 +45,14 @@ class _SelectIdentityState extends State<SelectIdentityPage> {
     });
   }
 
+  ///
+  /// @name dataSource
+  /// @description 数据源
+  /// @parameters
+  /// @return
+  /// @author lca
+  /// @date 2019-11-21
+  ///
   List<Map> dataSource = [
     {
       "title":"我是学生",
@@ -68,39 +76,48 @@ class _SelectIdentityState extends State<SelectIdentityPage> {
   ///
   Widget _itemBuilder(BuildContext context, int index) {
     Map map = dataSource[index];
-    return Padding(
-      padding: EdgeInsets.only(left: 25,right: 25),
-      child: Column(
-        children: <Widget>[
-          Container(height: 30,),
-          Container(
-            decoration: BoxDecoration(
-              color: map["color"],
-              borderRadius: BorderRadius.circular(15),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.only(left: 20,bottom: 5,top: 5),
-                  child: Container(
-                    height: 90,
-                    width: 90,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                        image: AssetImage(map["icon"]),
-                      )
+    return GestureDetector(
+      onTap: (){
+        if (index == 0) {
+
+        } else {
+          
+        }
+      },
+      child: Padding(
+        padding: EdgeInsets.only(left: 25,right: 25),
+        child: Column(
+          children: <Widget>[
+            Container(height: 30,),
+            Container(
+              decoration: BoxDecoration(
+                color: map["color"],
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.only(left: 20,bottom: 5,top: 5),
+                    child: Container(
+                      height: 90,
+                      width: 90,
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                            image: AssetImage(map["icon"]),
+                          )
+                      ),
                     ),
                   ),
-                ),
-                Padding(padding: EdgeInsets.only(right: 60),
-                  child: Text(map["title"],style: TextStyle(fontSize: 20,color: Colors.white),),
-                ),
-              ],
+                  Padding(padding: EdgeInsets.only(right: 60),
+                    child: Text(map["title"],style: TextStyle(fontSize: 20,color: Colors.white),),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
