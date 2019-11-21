@@ -45,6 +45,8 @@ dependencies:
   # 随机色
   random_color: ^1.0.3
 
+  color: ^2.1.1
+
   # 文本自适应
   auto_size_text: ^2.0.2+1
 

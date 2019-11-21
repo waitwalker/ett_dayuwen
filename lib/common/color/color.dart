@@ -6,6 +6,9 @@ class ETTColor {
   static Color g4_color = ColorConvert.convert("cccccc");
 
   static Color background_color = ColorConvert.convert("F2F7FF");
+
+  static Color student_select_identity_color = Color.fromRGBO(239, 124, 106, 1.0);
+  static Color teacher_select_identity_color = Color.fromRGBO(114, 176, 249, 1.0);
 }
 
 class ColorConvert {
