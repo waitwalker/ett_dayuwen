@@ -78,7 +78,9 @@ class _AppLoginState extends State<AppLoginPage> {
                     Text("登录即代表您已同意"),
                     GestureDetector(
                       child: Text("《龙之门大语文用户协议》",style: TextStyle(fontSize: 14,color: Colors.deepOrangeAccent),),
-                      onTap: (){},
+                      onTap: (){
+                        
+                      },
                     )
                   ],
                 ),
