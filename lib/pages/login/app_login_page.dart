@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_dayuwen/common/redux/app_state.dart';
+import 'package:flutter_dayuwen/pages/login/user_agreement_page.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
 ///
@@ -79,7 +80,9 @@ class _AppLoginState extends State<AppLoginPage> {
                     GestureDetector(
                       child: Text("《龙之门大语文用户协议》",style: TextStyle(fontSize: 14,color: Colors.deepOrangeAccent),),
                       onTap: (){
-                        
+                        Navigator.push(context, MaterialPageRoute(builder: (context){
+                          return UserAgreementPage();
+                        }));
                       },
                     )
                   ],
