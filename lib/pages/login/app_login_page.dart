@@ -125,7 +125,7 @@ class _AppLoginState extends State<AppLoginPage> {
                     color: Colors.amber,
                     disabledColor: Colors.grey,
                     onPressed: _loginEnable ? (){
-
+                      _packUpKeyboard();
                     } : null,
                   ),
                 ),
@@ -150,8 +150,7 @@ class _AppLoginState extends State<AppLoginPage> {
           ),
         ),
         onTap: (){
-          _numberFocusNode.unfocus();
-          _codeFocusNode.unfocus();
+          _packUpKeyboard();
         },
       );
     });
@@ -175,5 +174,18 @@ class _AppLoginState extends State<AppLoginPage> {
     setState(() {
 
     });
+  }
+
+  ///
+  /// @name _packUpKeyboard
+  /// @description 收起键盘
+  /// @parameters
+  /// @return
+  /// @author lca
+  /// @date 2019-11-25
+  ///
+  _packUpKeyboard() {
+    _numberFocusNode.unfocus();
+    _codeFocusNode.unfocus();
   }
 }
