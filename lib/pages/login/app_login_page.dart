@@ -20,7 +20,11 @@ class AppLoginPage extends StatefulWidget {
 }
 
 class _AppLoginState extends State<AppLoginPage> {
-  FocusNode _contentFocusNode = FocusNode();
+  FocusNode _numberFocusNode = FocusNode();
+  FocusNode _codeFocusNode = FocusNode();
+  TextEditingController _numberController;
+  TextEditingController _codeController;
+
   @override
   Widget build(BuildContext context) {
     return StoreBuilder<AppState>(builder: (context, store) {
@@ -45,12 +49,18 @@ class _AppLoginState extends State<AppLoginPage> {
                   child: Text(widget.index == 0 ? "学生登录" : "老师登录",style: TextStyle(fontSize: 25,fontWeight: FontWeight.w500),),),
                 Padding(padding: EdgeInsets.only(top: 40)),
                 TextField(
+                  controller: _numberController,
+                  focusNode: _numberFocusNode,
                   decoration: InputDecoration(
                     prefixIcon: Icon(Icons.phone_iphone,color: Colors.grey,),
                     hintText: "请输入手机号",
                     hintStyle: TextStyle(color: Colors.grey),
                     border: InputBorder.none,
                   ),
+                  onEditingComplete: (){
+
+                  },
+
                   keyboardType: TextInputType.phone,
                 ),
 
@@ -63,6 +73,8 @@ class _AppLoginState extends State<AppLoginPage> {
                     Container(
                       width: MediaQuery.of(context).size.width - 200,
                       child: TextField(
+                        controller: _codeController,
+                        focusNode: _codeFocusNode,
                         decoration: InputDecoration(
                           prefixIcon: Icon(Icons.lock_outline,color: Colors.grey,),
                           hintText: "请输入验证码",
@@ -109,7 +121,8 @@ class _AppLoginState extends State<AppLoginPage> {
           ),
         ),
         onTap: (){
-          _contentFocusNode.unfocus();
+          _numberFocusNode.unfocus();
+          _codeFocusNode.unfocus();
         },
       );
     });
