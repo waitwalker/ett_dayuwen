@@ -96,6 +96,12 @@ class _AppLoginState extends State<AppLoginPage> {
                           border: InputBorder.none,
                         ),
                         keyboardType: TextInputType.number,
+                        onChanged:(text){
+                          print("验证码输入:$text");
+                          if (text.length > 6) {
+                            _codeController.text = text.substring(0,6);
+                          }
+                        },
                       ),
                     ),
 
