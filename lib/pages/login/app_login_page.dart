@@ -33,22 +33,37 @@ class _AppLoginState extends State<AppLoginPage> {
   String _codeButtonTitle = "获取验证码";
 
   Timer countDownTimer;
+
+  ///
+  /// @name _startCountDownFunction
+  /// @description 倒计时
+  /// @parameters
+  /// @return
+  /// @author lca
+  /// @date 2019-11-25
+  ///
   _startCountDownFunction() {
     countDownTimer?.cancel();//如果已存在先取消置空
     countDownTimer = null;
     countDownTimer = Timer.periodic(new Duration(seconds: 1), (t){
       setState(() {
         if(60-t.tick>0){
+          _codeButtonEnable = false;
           _codeButtonTitle = "重新获取(${60-t.tick})";
         } else {
-          _codeButtonTitle = '获取验证码';
-          countDownTimer.cancel();
-          countDownTimer = null;
+
+          _cancelCountDownTimer();
         }
       });
     });
   }
 
+  _cancelCountDownTimer() {
+    _codeButtonEnable = true;
+    _codeButtonTitle = '获取验证码';
+    countDownTimer.cancel();
+    countDownTimer = null;
+  }
   @override
   void initState() {
     _numberController = TextEditingController();
@@ -104,6 +119,10 @@ class _AppLoginState extends State<AppLoginPage> {
                     if (text.length > 11) {
                       _numberController.text = text.substring(0,11);
                     }
+                    if (text.length == 0) {
+                      _cancelCountDownTimer();
+                    }
+                    _codeButtonState();
                     _loginButtonState();
                   },
 
@@ -132,7 +151,6 @@ class _AppLoginState extends State<AppLoginPage> {
                           if (text.length > 6) {
                             _codeController.text = text.substring(0,6);
                           }
-                          _codeButtonState();
                           _loginButtonState();
                         },
                       ),
@@ -210,7 +228,8 @@ class _AppLoginState extends State<AppLoginPage> {
   _codeButtonState() {
     RegExp exp = RegExp(
         r'^((13[0-9])|(14[0-9])|(15[0-9])|(16[0-9])|(17[0-9])|(18[0-9])|(19[0-9]))\d{8}$');
-    _codeButtonEnable = exp.hasMatch(_numberController.text);
+    bool matched = exp.hasMatch(_numberController.text);
+    _codeButtonEnable = matched;
   }
 
   ///
