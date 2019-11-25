@@ -26,6 +26,13 @@ class _AppLoginState extends State<AppLoginPage> {
   TextEditingController _codeController;
 
   @override
+  void initState() {
+    _numberController = TextEditingController();
+    _codeController = TextEditingController();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return StoreBuilder<AppState>(builder: (context, store) {
       return GestureDetector(
@@ -59,6 +66,13 @@ class _AppLoginState extends State<AppLoginPage> {
                   ),
                   onEditingComplete: (){
 
+                  },
+
+                  onChanged:(text){
+                    print("手机号输入:$text");
+                    if (text.length > 11) {
+                      _numberController.text = text.substring(0,11);
+                    }
                   },
 
                   keyboardType: TextInputType.phone,
