@@ -27,6 +27,7 @@ class _AppLoginState extends State<AppLoginPage> {
   TextEditingController _numberController;
   TextEditingController _codeController;
 
+  bool _codeButtonEnable = false;
   bool _loginEnable = false;
 
   String _codeButtonTitle = "获取验证码";
@@ -38,7 +39,7 @@ class _AppLoginState extends State<AppLoginPage> {
     countDownTimer = Timer.periodic(new Duration(seconds: 1), (t){
       setState(() {
         if(60-t.tick>0){
-          _codeButtonTitle = "${60-t.tick}秒";
+          _codeButtonTitle = "重新获取(${60-t.tick})";
         } else {
           _codeButtonTitle = '获取验证码';
           countDownTimer.cancel();
@@ -131,6 +132,7 @@ class _AppLoginState extends State<AppLoginPage> {
                           if (text.length > 6) {
                             _codeController.text = text.substring(0,6);
                           }
+                          _codeButtonState();
                           _loginButtonState();
                         },
                       ),
@@ -138,7 +140,7 @@ class _AppLoginState extends State<AppLoginPage> {
 
                     FlatButton(
                       child: Text(_codeButtonTitle,style: TextStyle(fontSize: 14),),
-                      onPressed: _codeButtonTitle == "获取验证码" ? _startCountDownFunction : null,
+                      onPressed: _codeButtonEnable ? _startCountDownFunction : null,
 
                     ),
                   ],
@@ -200,10 +202,15 @@ class _AppLoginState extends State<AppLoginPage> {
     } else {
       _loginEnable = false;
     }
-
     setState(() {
 
     });
+  }
+
+  _codeButtonState() {
+    RegExp exp = RegExp(
+        r'^((13[0-9])|(14[0-9])|(15[0-9])|(16[0-9])|(17[0-9])|(18[0-9])|(19[0-9]))\d{8}$');
+    _codeButtonEnable = exp.hasMatch(_numberController.text);
   }
 
   ///
