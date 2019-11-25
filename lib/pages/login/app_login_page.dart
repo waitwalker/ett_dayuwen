@@ -25,6 +25,8 @@ class _AppLoginState extends State<AppLoginPage> {
   TextEditingController _numberController;
   TextEditingController _codeController;
 
+  bool loginEnable = false;
+
   @override
   void initState() {
     _numberController = TextEditingController();
@@ -79,9 +81,7 @@ class _AppLoginState extends State<AppLoginPage> {
                 ),
 
                 Divider(height: 3.0,color: Colors.grey,),
-
                 Padding(padding: EdgeInsets.only(top: 20)),
-
                 Row(
                   children: <Widget>[
                     Container(
@@ -118,7 +118,14 @@ class _AppLoginState extends State<AppLoginPage> {
                 Padding(padding: EdgeInsets.only(top: 40)),
                 SizedBox(
                   width: double.infinity,
-                  child: CupertinoButton(child: Text("登录"), onPressed: (){},color: Colors.amber,disabledColor: Colors.grey,),
+                  child: CupertinoButton(
+                    child: Text("登录"),
+                    color: Colors.amber,
+                    disabledColor: Colors.grey,
+                    onPressed: loginEnable ? (){
+
+                    } : null,
+                  ),
                 ),
 
                 Padding(padding: EdgeInsets.only(top: 20)),
