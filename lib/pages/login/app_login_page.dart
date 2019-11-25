@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_dayuwen/common/redux/app_state.dart';
@@ -27,11 +29,36 @@ class _AppLoginState extends State<AppLoginPage> {
 
   bool _loginEnable = false;
 
+  String _codeButtonTitle = "获取验证码";
+
+  Timer countDownTimer;
+  _startCountDownFunction() {
+    countDownTimer?.cancel();//如果已存在先取消置空
+    countDownTimer = null;
+    countDownTimer = Timer.periodic(new Duration(seconds: 1), (t){
+      setState(() {
+        if(60-t.tick>0){
+          _codeButtonTitle = "${60-t.tick}秒";
+        } else {
+          _codeButtonTitle = '获取验证码';
+          countDownTimer.cancel();
+          countDownTimer = null;
+        }
+      });
+    });
+  }
+
   @override
   void initState() {
     _numberController = TextEditingController();
     _codeController = TextEditingController();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+
+    super.dispose();
   }
 
   @override
@@ -84,6 +111,7 @@ class _AppLoginState extends State<AppLoginPage> {
                 Divider(height: 3.0,color: Colors.grey,),
                 Padding(padding: EdgeInsets.only(top: 20)),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Container(
                       width: MediaQuery.of(context).size.width - 200,
@@ -108,7 +136,8 @@ class _AppLoginState extends State<AppLoginPage> {
                     ),
 
                     FlatButton(
-                      child: Text("获取验证码",style: TextStyle(fontSize: 14),),
+                      child: Text(_codeButtonTitle,style: TextStyle(fontSize: 14),),
+                      onPressed: _codeButtonTitle == "获取验证码" ? _startCountDownFunction : null,
 
                     ),
                   ],
