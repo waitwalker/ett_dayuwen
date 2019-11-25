@@ -75,6 +75,16 @@ class _AppLoginState extends State<AppLoginPage> {
                     if (text.length > 11) {
                       _numberController.text = text.substring(0,11);
                     }
+
+                    if (_numberController.text.length == 11 && _codeController.text.length >= 4) {
+                      loginEnable = true;
+                    } else {
+                      loginEnable = false;
+                    }
+
+                    setState(() {
+
+                    });
                   },
 
                   keyboardType: TextInputType.phone,
@@ -101,6 +111,15 @@ class _AppLoginState extends State<AppLoginPage> {
                           if (text.length > 6) {
                             _codeController.text = text.substring(0,6);
                           }
+                          if (_numberController.text.length == 11 && _codeController.text.length >= 4) {
+                            loginEnable = true;
+                          } else {
+                            loginEnable = false;
+                          }
+
+                          setState(() {
+
+                          });
                         },
                       ),
                     ),
