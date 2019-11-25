@@ -57,7 +57,8 @@ class _AppLoginState extends State<AppLoginPage> {
 
   @override
   void dispose() {
-
+    countDownTimer?.cancel();
+    countDownTimer = null;
     super.dispose();
   }
 
