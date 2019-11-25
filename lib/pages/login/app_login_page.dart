@@ -46,26 +46,42 @@ class _AppLoginState extends State<AppLoginPage> {
                 Padding(padding: EdgeInsets.only(top: 40)),
                 TextField(
                   decoration: InputDecoration(
-                      prefixIcon: Icon(Icons.phone_iphone,color: Colors.grey,),
-                      hintText: "请输入手机号",
-                      hintStyle: TextStyle(color: Colors.grey)
+                    prefixIcon: Icon(Icons.phone_iphone,color: Colors.grey,),
+                    hintText: "请输入手机号",
+                    hintStyle: TextStyle(color: Colors.grey),
+                    border: InputBorder.none,
                   ),
                   keyboardType: TextInputType.phone,
-                  maxLength: 11,
                 ),
-                TextField(
-                  decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.lock_outline,color: Colors.grey,),
-                    hintText: "请输入验证码",
-                    hintStyle: TextStyle(color: Colors.grey),
-                    suffix: Padding(
-                      padding: EdgeInsets.only(right: 5),
-                      child: GestureDetector(child: Text("获取验证码",style: TextStyle(fontSize: 15),),),
+
+                Divider(height: 3.0,color: Colors.grey,),
+
+                Padding(padding: EdgeInsets.only(top: 20)),
+
+                Row(
+                  children: <Widget>[
+                    Container(
+                      width: MediaQuery.of(context).size.width - 200,
+                      child: TextField(
+                        decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.lock_outline,color: Colors.grey,),
+                          hintText: "请输入验证码",
+                          hintStyle: TextStyle(color: Colors.grey),
+                          border: InputBorder.none,
+                        ),
+                        keyboardType: TextInputType.number,
+                      ),
                     ),
-                  ),
-                  keyboardType: TextInputType.number,
-                  maxLength: 4,
+
+                    FlatButton(
+                      child: Text("获取验证码",style: TextStyle(fontSize: 14),),
+
+                    ),
+                  ],
                 ),
+
+                Divider(height: 3.0,color: Colors.grey,),
+
 
                 Padding(padding: EdgeInsets.only(top: 40)),
                 SizedBox(
