@@ -25,7 +25,7 @@ class _AppLoginState extends State<AppLoginPage> {
   TextEditingController _numberController;
   TextEditingController _codeController;
 
-  bool loginEnable = false;
+  bool _loginEnable = false;
 
   @override
   void initState() {
@@ -75,16 +75,7 @@ class _AppLoginState extends State<AppLoginPage> {
                     if (text.length > 11) {
                       _numberController.text = text.substring(0,11);
                     }
-
-                    if (_numberController.text.length == 11 && _codeController.text.length >= 4) {
-                      loginEnable = true;
-                    } else {
-                      loginEnable = false;
-                    }
-
-                    setState(() {
-
-                    });
+                    _loginButtonState();
                   },
 
                   keyboardType: TextInputType.phone,
@@ -111,15 +102,7 @@ class _AppLoginState extends State<AppLoginPage> {
                           if (text.length > 6) {
                             _codeController.text = text.substring(0,6);
                           }
-                          if (_numberController.text.length == 11 && _codeController.text.length >= 4) {
-                            loginEnable = true;
-                          } else {
-                            loginEnable = false;
-                          }
-
-                          setState(() {
-
-                          });
+                          _loginButtonState();
                         },
                       ),
                     ),
@@ -141,7 +124,7 @@ class _AppLoginState extends State<AppLoginPage> {
                     child: Text("登录"),
                     color: Colors.amber,
                     disabledColor: Colors.grey,
-                    onPressed: loginEnable ? (){
+                    onPressed: _loginEnable ? (){
 
                     } : null,
                   ),
@@ -171,6 +154,26 @@ class _AppLoginState extends State<AppLoginPage> {
           _codeFocusNode.unfocus();
         },
       );
+    });
+  }
+
+  ///
+  /// @name _loginButtonState
+  /// @description 登录按钮状态
+  /// @parameters
+  /// @return
+  /// @author lca
+  /// @date 2019-11-25
+  ///
+  _loginButtonState() {
+    if (_numberController.text.length == 11 && _codeController.text.length >= 4) {
+      _loginEnable = true;
+    } else {
+      _loginEnable = false;
+    }
+
+    setState(() {
+
     });
   }
 }
