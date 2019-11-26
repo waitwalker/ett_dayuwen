@@ -94,27 +94,39 @@ class AppLoginManager {
 //      Navigator.push(context, PageTransition(type: PageTransitionType.fade, child: TeacherHomePage()));
 //    }
 //  }
-//
-//  ///
-//  /// @name _showLoading
-//  /// @description 显示加载圈
-//  /// @parameters
-//  /// @return
-//  /// @author lca
-//  /// @date 2019-10-29
-//  ///
-//  _showLoading(BuildContext context) {
-//    showDialog(context: context,builder: (context) {
-//      return Center(
-//        child: Container(
-//          width: 80,
-//          height: 80,
-//          child: CircularProgressIndicator(),
-//        ),
-//      );
-//    });
-//  }
-//
+
+  ///
+  /// @name _showLoading
+  /// @description 显示加载圈
+  /// @parameters
+  /// @return
+  /// @author lca
+  /// @date 2019-10-29
+  ///
+  _showLoading(BuildContext context) {
+    showDialog(context: context,builder: (context) {
+      return Center(
+        child: Container(
+          width: 80,
+          height: 80,
+          child: CircularProgressIndicator(),
+        ),
+      );
+    });
+  }
+
+  ///
+  /// @name _hideLoading
+  /// @description 隐藏加载圈
+  /// @parameters
+  /// @return
+  /// @author lca
+  /// @date 2019-11-26
+  ///
+  _hideLoading(BuildContext context) {
+    Navigator.of(context).pop();
+  }
+
 //  ///
 //  /// @name _writeUserDataToCache
 //  /// @description 写入用户数据
@@ -220,12 +232,13 @@ class AppLoginManager {
       },
     };
 
+    _showLoading(context);
+
     /// 获取配置
     ResponseData responseData = await DaoManager.interfaceConfigFetch({});
     if (responseData != null && responseData.model != null) {
       if (responseData.model.code == 200) {
         AppLoginManager.instance.configModel = responseData.model.result;
-
       } else {
         AppLoginManager.instance.configModel = Result.fromJson(map);
       }
