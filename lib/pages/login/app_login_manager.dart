@@ -206,18 +206,33 @@ class AppLoginManager {
   /// @date 2019-10-31
   ///
   autoLogin(BuildContext context) async {
+    Map<String,dynamic> map = {
+      "imgPrefixUrl":"http://cdn.yuwenclub.com/",
+      "server_url":{
+        "apiServer":"https://api.yuwenclub.com"
+      },
+      "musicTimeout":"5",
+      "xianshengTimeout":"30",
+      "h5_url":{
+        "teacherUrl" : "https://app-t.yuwenclub.com/#/",
+        "studentUrl" : "https://app.yuwenclub.com",
+        "userAgreementUrl" : "https://m.yuwenclub.com/terms.html",
+      },
+    };
+
     /// 获取配置
     ResponseData responseData = await DaoManager.interfaceConfigFetch({});
     if (responseData != null && responseData.model != null) {
       if (responseData.model.code == 200) {
         AppLoginManager.instance.configModel = responseData.model.result;
+
       } else {
-        
+        AppLoginManager.instance.configModel = Result.fromJson(map);
       }
     } else {
+      AppLoginManager.instance.configModel = Result.fromJson(map);
 
     }
-
 
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     bool token = sharedPreferences.getBool("token");

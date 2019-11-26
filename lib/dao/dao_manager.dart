@@ -53,12 +53,16 @@ class DaoManager {
     if (response.result) {
       Utf8Decoder utf8decoder = Utf8Decoder();//修复中文乱码问题
       print("response.data:${response.data}");
+      if (response.data is String) {
+        String jsonString = response.data;
 
-      String jsonString = response.data;
-
-      var resultMap = json.decode(jsonString);
-      var model = InterfaceConfigModel.fromJson(resultMap);
-      response.model = model;
+        var resultMap = json.decode(jsonString);
+        var model = InterfaceConfigModel.fromJson(resultMap);
+        response.model = model;
+      } else {
+        var model = InterfaceConfigModel.fromJson(response.data);
+        response.model = model;
+      }
       return response;
     } else {
       throw Exception("获取接口配置请求失败");

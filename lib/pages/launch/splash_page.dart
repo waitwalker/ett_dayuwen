@@ -79,7 +79,6 @@ class SplashScreenState extends State<SplashPage>
 
   @override
   void initState() {
-    _interfaceConfig();
     animationController = AnimationController(
         vsync: this, duration: Duration(milliseconds: 1500));
     animation =
@@ -90,26 +89,6 @@ class SplashScreenState extends State<SplashPage>
     startTime();
 
     super.initState();
-  }
-
-  ///
-  /// @name _interfaceConfig
-  /// @description 请求接口配置数据
-  /// @parameters
-  /// @return
-  /// @author lca
-  /// @date 2019-11-26
-  ///
-  _interfaceConfig() async {
-    ResponseData responseData = await DaoManager.interfaceConfigFetch({});
-
-    if (responseData != null && responseData.model != null) {
-
-    } else {
-
-    }
-
-
   }
 
   @override
