@@ -1,6 +1,7 @@
-import 'dart:collection';
+import 'dart:io';
 
 import 'package:date_format/date_format.dart';
+import 'package:device_info/device_info.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dayuwen/common/database/database_manager.dart';
@@ -253,7 +254,18 @@ class AppLoginManager {
     if (token != null) {
       /// 直接登录
 
+      DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+      IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
 
+      String phoneSysVersion;
+      String appVersion;
+      String platform;
+
+      if (Platform.isIOS) {
+        phoneSysVersion = androidInfo.bootloader;
+        appVersion = androidInfo.
+      }
 
       Map<String,String> map = await readUserData();
       if (map != null) {
