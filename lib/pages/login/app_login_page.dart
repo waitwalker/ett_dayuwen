@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_dayuwen/common/network/network_manager.dart';
 import 'package:flutter_dayuwen/common/redux/app_state.dart';
 import 'package:flutter_dayuwen/dao/dao_manager.dart';
+import 'package:flutter_dayuwen/pages/login/app_login_manager.dart';
 import 'package:flutter_dayuwen/pages/login/user_agreement_page.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
@@ -215,6 +216,8 @@ class _AppLoginState extends State<AppLoginPage> {
                     disabledColor: Colors.grey,
                     onPressed: _loginEnable ? (){
                       _packUpKeyboard();
+                      AppLoginManager.instance.login(context, {"phone":_numberController.text,"code":_codeController.text,"role":widget.index});
+
                     } : null,
                   ),
                 ),

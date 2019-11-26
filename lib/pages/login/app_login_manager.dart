@@ -262,5 +262,14 @@ class AppLoginManager {
   }
 
 
+  login(BuildContext context, Map parameter) async {
+    ResponseData responseData = await DaoManager.loginFetch(parameter);
+    if (responseData != null && responseData.model != null) {
+
+    }
+  }
+
+
+
 
 }

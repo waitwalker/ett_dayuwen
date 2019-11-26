@@ -195,6 +195,7 @@ class NetworkManager {
     try {
       if (data == null) {
         response = await dio.request(url, data: tmpParameters, options: option);
+        print("响应数据:$response");
       } else {
         response = await dio.request(url, data: data, options: option);
       }
