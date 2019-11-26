@@ -101,15 +101,25 @@ class _AppLoginState extends State<AppLoginPage> {
               },
             ),
           ),
-          body: Padding(
-            padding: EdgeInsets.only(left: 40,right: 40,top: 30),
-            child: Column(
-              children: <Widget>[
-                Container(
+          body: Column(
+            children: <Widget>[
+              Padding(padding: EdgeInsets.only(top: 40)),
+              Padding(
+                padding: EdgeInsets.only(left: 30),
+                child: Container(
                   alignment: Alignment.centerLeft,
-                  child: Text(widget.index == 0 ? "学生登录" : "老师登录",style: TextStyle(fontSize: 25,fontWeight: FontWeight.w500),),),
-                Padding(padding: EdgeInsets.only(top: 40)),
-                TextField(
+                  child: Text(
+                    widget.index == 0 ? "学生登录" : "老师登录",
+                    style: TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 40,left: 20,right: 20),
+                child: TextField(
                   controller: _numberController,
                   focusNode: _numberFocusNode,
                   decoration: InputDecoration(
@@ -136,10 +146,17 @@ class _AppLoginState extends State<AppLoginPage> {
 
                   keyboardType: TextInputType.phone,
                 ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 20,right: 20),
+                child: Divider(height: 3.0,color: Colors.grey,),
+              ),
 
-                Divider(height: 3.0,color: Colors.grey,),
-                Padding(padding: EdgeInsets.only(top: 20)),
-                Row(
+
+              Padding(padding: EdgeInsets.only(top: 20)),
+              Padding(
+                padding: EdgeInsets.only(left: 20,right: 20),
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Container(
@@ -171,12 +188,18 @@ class _AppLoginState extends State<AppLoginPage> {
                     ),
                   ],
                 ),
+              ),
 
-                Divider(height: 3.0,color: Colors.grey,),
+              Padding(
+                padding: EdgeInsets.only(left: 20,right: 20),
+                child: Divider(height: 3.0,color: Colors.grey,),
+              ),
 
+              Padding(padding: EdgeInsets.only(top: 40)),
 
-                Padding(padding: EdgeInsets.only(top: 40)),
-                SizedBox(
+              Padding(
+                padding: EdgeInsets.only(left: 20,right: 20),
+                child: SizedBox(
                   width: double.infinity,
                   child: CupertinoButton(
                     child: Text("登录"),
@@ -187,24 +210,25 @@ class _AppLoginState extends State<AppLoginPage> {
                     } : null,
                   ),
                 ),
+              ),
 
-                Padding(padding: EdgeInsets.only(top: 20)),
-                Row(
-                  children: <Widget>[
-                    Text("登录即代表您已同意"),
-                    GestureDetector(
-                      child: Text("《龙之门大语文用户协议》",style: TextStyle(fontSize: 14,color: Colors.deepOrangeAccent),),
-                      onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context){
-                          return UserAgreementPage();
-                        }));
-                      },
-                    )
-                  ],
-                ),
+              Padding(padding: EdgeInsets.only(top: 20)),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text("登录即代表您已同意",style: TextStyle(fontSize: 13),),
+                  GestureDetector(
+                    child: Text("《龙之门大语文用户协议》",style: TextStyle(fontSize: 13,color: Colors.deepOrangeAccent),),
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context){
+                        return UserAgreementPage();
+                      }));
+                    },
+                  )
+                ],
+              ),
 
-              ],
-            ),
+            ],
           ),
         ),
         onTap: (){

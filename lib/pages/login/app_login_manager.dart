@@ -282,7 +282,7 @@ class AppLoginManager {
 
     } else {
       _hideLoading(context);
-      Navigator.pushNamedAndRemoveUntil(context, "/login", (Route<dynamic> route) => false);
+      Navigator.pushNamedAndRemoveUntil(context, "/select_identity", (Route<dynamic> route) => false);
     }
   }
 
