@@ -387,46 +387,6 @@ class NetworkAssistant {
         case Const.loginInterface:
           return "http://i.im.etiantian.net/study-im-service-2.0/user/login.do";
           break;
-        case Const.teacherRecentTask:
-          return "https://school.etiantian.com/aixue33/im3.1.2?m=getTeacherHomePageInfo.do";
-          break;
-
-        case Const.teacherSubjectList:
-          return "https://school.etiantian.com/aixue33/im2.0.5?m=getTeacherSubjectList.do";
-          break;
-
-        case Const.teacherCourseList:
-          return "https://school.etiantian.com/aixue33/im2.0?m=getLessonList.do";
-          break;
-
-        case Const.teacherResource:
-          return "https://school.etiantian.com/aixue33/im2.0.1?m=getTeacherStudyTaskInfo2.do";
-          break;
-
-        case Const.teacherMicroCourse:
-          return "https://school.etiantian.com/aixue31/im2.0.1?m=getTeacherLittleTaskInfo2.do";
-          break;
-
-        case Const.personalInformation:
-          return "http://i.im.etiantian.net/study-im-service-2.0/user/userInfo.do";
-          break;
-
-        case Const.uploadAvatar:
-          return "http://i.m.etiantian.com/app-common-service/uploadUserPhoto.do";
-          break;
-
-        case Const.questionItems:
-          return "http://school.etiantian.com/aixue31/im2.0?m=getGroupTaskInfo.do";
-          break;
-        case Const.classNoticeList:
-          return "https://i.im.etiantian.net/shaishai_2_0_0/shaiDynamic/getActivityList.do";
-          break;
-        case Const.classNoticeDetail:
-          return "https://i.im.etiantian.net/shaishai_2_0_0/shaiDynamic/getActivityInfo.do";
-          break;
-        case Const.studentSubject:
-          return "https://school.etiantian.com/aixue33/im3.1.5?m=getWorkInfo.do";
-          break;
         default:
           return "";
           break;
@@ -435,46 +395,6 @@ class NetworkAssistant {
       switch (interface) {
         case Const.loginInterface:
           return "http://i.im.etiantian.net/study-im-service-2.0/user/login.do";
-          break;
-        case Const.teacherRecentTask:
-          return "https://school.etiantian.com/aixue33/im3.1.2?m=getTeacherHomePageInfo.do";
-          break;
-
-        case Const.teacherSubjectList:
-          return "https://school.etiantian.com/aixue33/im2.0.5?m=getTeacherSubjectList.do";
-          break;
-
-        case Const.teacherCourseList:
-          return "https://school.etiantian.com/aixue33/im2.0?m=getLessonList.do";
-          break;
-
-        case Const.teacherResource:
-          return "https://school.etiantian.com/aixue33/im2.0.1?m=getTeacherStudyTaskInfo2.do";
-          break;
-
-        case Const.teacherMicroCourse:
-          return "https://school.etiantian.com/aixue31/im2.0.1?m=getTeacherLittleTaskInfo2.do";
-          break;
-
-        case Const.personalInformation:
-          return "http://i.im.etiantian.net/study-im-service-2.0/user/userInfo.do";
-          break;
-
-        case Const.uploadAvatar:
-          return "http://i.m.etiantian.com/app-common-service/uploadUserPhoto.do";
-          break;
-
-        case Const.questionItems:
-          return "http://school.etiantian.com/aixue31/im2.0?m=getGroupTaskInfo.do";
-          break;
-        case Const.classNoticeList:
-          return "https://i.im.etiantian.net/shaishai_2_0_0/shaiDynamic/getActivityList.do";
-          break;
-        case Const.classNoticeDetail:
-          return "https://i.im.etiantian.net/shaishai_2_0_0/shaiDynamic/getActivityInfo.do";
-          break;
-        case Const.studentSubject:
-          return "https://school.etiantian.com/aixue33/im3.1.5?m=getWorkInfo.do";
           break;
         default:
           return "";
