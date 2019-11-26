@@ -279,10 +279,9 @@ class AppLoginManager {
         "platform":platform,
         "x-token":token,
       };
-      
+
     } else {
-
-
+      _hideLoading(context);
       Navigator.pushNamedAndRemoveUntil(context, "/login", (Route<dynamic> route) => false);
     }
   }
