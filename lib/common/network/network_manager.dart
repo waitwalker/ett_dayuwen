@@ -140,7 +140,7 @@ class NetworkManager {
       headers["platform"] = platform;
     }
     headers["X-Parse-Application-Id"] = "4jXtTizndgVDum5Hjey3";
-    headers["X-Parse-REST-API-Key"] = "S7iGWSBbVRDfeZ5g8pSt";
+    headers["X-Parse-REST-API-Key"] = "X-Parse-REST-API-Key";
     headers["X-Parse-JavaScript-Key"] = "F1lbi2cKvzgIswP4BWNJ";
 
 
@@ -194,7 +194,7 @@ class NetworkManager {
     Response response;
     try {
       if (data == null) {
-        response = await dio.request(url, queryParameters: tmpParameters, options: option);
+        response = await dio.request(url, data: tmpParameters, options: option);
       } else {
         response = await dio.request(url, data: data, options: option);
       }
