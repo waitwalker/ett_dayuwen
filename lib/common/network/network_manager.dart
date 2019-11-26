@@ -381,8 +381,8 @@ class NetworkAssistant {
     if (Config.DEBUG) {
 
       switch (interface) {
-        case Const.config:
-          return "";
+        case Const.interfaceConfig:
+          return "https://api.yuwenclub.com/basic/appConfig";
           break;
         case Const.loginInterface:
           return "http://i.im.etiantian.net/study-im-service-2.0/user/login.do";
