@@ -8,6 +8,7 @@ import 'package:flutter_dayuwen/common/database/database_manager.dart';
 import 'package:flutter_dayuwen/common/network/network_manager.dart';
 import 'package:flutter_dayuwen/dao/dao_manager.dart';
 import 'package:flutter_dayuwen/models/interface_config_mode.dart';
+import 'package:package_info/package_info.dart';
 
 import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -253,29 +254,33 @@ class AppLoginManager {
 
     if (token != null) {
       /// 直接登录
-
       DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
       AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
       IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+
+      PackageInfo packageInfo = await PackageInfo.fromPlatform();
 
       String phoneSysVersion;
       String appVersion;
       String platform;
 
       if (Platform.isIOS) {
+        phoneSysVersion = iosInfo.systemVersion;
+        appVersion = packageInfo.version;
+        platform = "2";
+      } else if (Platform.isAndroid) {
         phoneSysVersion = androidInfo.bootloader;
-        appVersion = androidInfo.
+        appVersion = packageInfo.version;
+        platform = "1";
       }
 
-      Map<String,String> map = await readUserData();
+      //Map<String,String> map = await readUserData();
       if (map != null) {
-        routeToPage(context, map);
+        //routeToPage(context, map);
       } else {
         Navigator.pushNamedAndRemoveUntil(context, "/login", (Route<dynamic> route) => false);
       }
     } else {
-
-
       Navigator.pushNamedAndRemoveUntil(context, "/login", (Route<dynamic> route) => false);
     }
   }
