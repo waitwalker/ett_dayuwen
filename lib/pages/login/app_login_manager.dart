@@ -250,22 +250,22 @@ class AppLoginManager {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     bool token = sharedPreferences.getBool("token");
 
-//    if (token != null) {
-//      /// 直接登录
-//
-//
-//
-//      Map<String,String> map = await readUserData();
-//      if (map != null) {
-//        routeToPage(context, map);
-//      } else {
-//        Navigator.pushNamedAndRemoveUntil(context, "/login", (Route<dynamic> route) => false);
-//      }
-//    } else {
-//
-//
-//      Navigator.pushNamedAndRemoveUntil(context, "/login", (Route<dynamic> route) => false);
-//    }
+    if (token != null) {
+      /// 直接登录
+
+
+
+      Map<String,String> map = await readUserData();
+      if (map != null) {
+        routeToPage(context, map);
+      } else {
+        Navigator.pushNamedAndRemoveUntil(context, "/login", (Route<dynamic> route) => false);
+      }
+    } else {
+
+
+      Navigator.pushNamedAndRemoveUntil(context, "/login", (Route<dynamic> route) => false);
+    }
   }
 
 
