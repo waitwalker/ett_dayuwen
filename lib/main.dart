@@ -5,7 +5,7 @@ import 'package:flutter_dayuwen/pages/launch/splash_page.dart';
 import 'package:flutter_dayuwen/pages/login/app_login_page.dart';
 import 'package:flutter_dayuwen/pages/placeholder/placeholder_page.dart';
 import 'package:flutter_dayuwen/pages/student_app/student_home_page.dart';
-import 'package:flutter_dayuwen/pages/teacher_home_page/teacher_home_page.dart';
+import 'package:flutter_dayuwen/pages/teacher_page/teacher_home_page.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
