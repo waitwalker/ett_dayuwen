@@ -4,7 +4,7 @@ import 'package:flutter_dayuwen/common/const/const.dart';
 import 'package:flutter_dayuwen/common/network/network_manager.dart';
 import 'package:flutter_dayuwen/common/singleton/singleton_manager.dart';
 import 'package:flutter_dayuwen/models/interface_config_mode.dart';
-import 'package:flutter_dayuwen/pages/login/login_model.dart';
+import 'package:flutter_dayuwen/models/login_model.dart';
 
 ///
 /// @name DaoManager
@@ -23,8 +23,8 @@ class DaoManager {
   /// @Date: 2019-09-02
   ///
   static Future <ResponseData> loginFetch(Map<String,dynamic> parameters) async {
-//    var response = await NetworkManager.post(Const.loginInterface, parameters);
-//    if (response.result) {
+    var response = await NetworkManager.post(Const.loginInterface, parameters);
+    if (response.result) {
 //      Utf8Decoder utf8decoder = Utf8Decoder();//修复中文乱码问题
 //      print("response.data:${response.data}");
 //
@@ -34,10 +34,10 @@ class DaoManager {
 //      var loginModel = LoginModel.fromJson(resultMap);
 //      response.model = loginModel;
 //      SingletonManager.sharedInstance.loginModel = loginModel;
-//      return response;
-//    } else {
-//      throw Exception("登录接口请求失败");
-//    }
+      return response;
+    } else {
+      throw Exception("登录接口请求失败");
+    }
   }
 
   ///

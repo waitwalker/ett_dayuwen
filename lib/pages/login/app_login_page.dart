@@ -78,6 +78,13 @@ class _AppLoginState extends State<AppLoginPage> {
   _codeFetch() async {
     ResponseData responseData = await DaoManager.codeFetch({"phone":_numberController.text});
     if (responseData != null && responseData.model != null) {
+      if (responseData.model.code == 403) {
+
+      } else if (responseData.model.code == 500) {
+
+      } else if (responseData.model.code == 200) {
+
+      }
 
     }
   }
@@ -214,9 +221,14 @@ class _AppLoginState extends State<AppLoginPage> {
                     child: Text("登录"),
                     color: Colors.amber,
                     disabledColor: Colors.grey,
-                    onPressed: _loginEnable ? (){
+                    onPressed: _loginEnable ? () async{
                       _packUpKeyboard();
-                      AppLoginManager.instance.login(context, {"phone":_numberController.text,"code":_codeController.text,"role":widget.index});
+
+                      ResponseData responseData = await DaoManager.loginFetch({"phone":_numberController.text,"code":_codeController.text,"role":widget.index},);
+
+                      if (responseData != null && responseData.model != null) {
+
+                      }
 
                     } : null,
                   ),
