@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dayuwen/common/database/database_manager.dart';
 import 'package:flutter_dayuwen/common/network/network_manager.dart';
 import 'package:flutter_dayuwen/dao/dao_manager.dart';
+import 'package:flutter_dayuwen/models/interface_config_mode.dart';
 
 import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -40,7 +41,9 @@ class AppLoginManager {
     return _instance;
   }
 
-  
+
+  /// 配置model
+  Result configModel;
 
   /// 登录 model
 //  Data loginModel;
@@ -206,7 +209,11 @@ class AppLoginManager {
     /// 获取配置
     ResponseData responseData = await DaoManager.interfaceConfigFetch({});
     if (responseData != null && responseData.model != null) {
-
+      if (responseData.model.code == 200) {
+        AppLoginManager.instance.configModel = responseData.model.result;
+      } else {
+        
+      }
     } else {
 
     }
