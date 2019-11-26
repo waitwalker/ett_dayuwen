@@ -58,6 +58,14 @@ class _AppLoginState extends State<AppLoginPage> {
     });
   }
 
+  ///
+  /// @name _cancelCountDownTimer
+  /// @description 取消倒计时
+  /// @parameters
+  /// @return
+  /// @author lca
+  /// @date 2019-11-26
+  ///
   _cancelCountDownTimer() {
     _codeButtonEnable = true;
     _codeButtonTitle = '获取验证码';

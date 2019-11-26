@@ -250,7 +250,7 @@ class AppLoginManager {
     }
 
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    bool token = sharedPreferences.getBool("token");
+    String token = sharedPreferences.getString("token");
 
     if (token != null) {
       /// 直接登录
@@ -263,7 +263,6 @@ class AppLoginManager {
       String phoneSysVersion;
       String appVersion;
       String platform;
-
       if (Platform.isIOS) {
         phoneSysVersion = iosInfo.systemVersion;
         appVersion = packageInfo.version;
@@ -274,13 +273,16 @@ class AppLoginManager {
         platform = "1";
       }
 
-      //Map<String,String> map = await readUserData();
-      if (map != null) {
-        //routeToPage(context, map);
-      } else {
-        Navigator.pushNamedAndRemoveUntil(context, "/login", (Route<dynamic> route) => false);
-      }
+      Map <String,dynamic> parameter = {
+        "phoneSysVersion":phoneSysVersion,
+        "appVersion":appVersion,
+        "platform":platform,
+        "x-token":token,
+      };
+      
     } else {
+
+
       Navigator.pushNamedAndRemoveUntil(context, "/login", (Route<dynamic> route) => false);
     }
   }

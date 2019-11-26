@@ -8,6 +8,7 @@ import 'dart:io';
 import 'package:event_bus/event_bus.dart';
 import 'package:flutter_dayuwen/common/config/config.dart';
 import 'package:flutter_dayuwen/common/const/const.dart';
+import 'package:flutter_dayuwen/pages/login/app_login_manager.dart';
 
 ///
 /// @Class: NetworkManager
@@ -388,11 +389,8 @@ class NetworkAssistant {
         case Const.interfaceConfig:
           return "https://api.yuwenclub.com/basic/appConfig";
           break;
-        case Const.loginInterface:
-          return "http://i.im.etiantian.net/study-im-service-2.0/user/login.do";
-          break;
         default:
-          return "";
+          return AppLoginManager.instance.configModel.serverUrl.apiServer + interface;
           break;
       }
     } else {
