@@ -4,6 +4,8 @@ import 'package:date_format/date_format.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dayuwen/common/database/database_manager.dart';
+import 'package:flutter_dayuwen/common/network/network_manager.dart';
+import 'package:flutter_dayuwen/dao/dao_manager.dart';
 
 import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -37,6 +39,8 @@ class AppLoginManager {
     }
     return _instance;
   }
+
+  
 
   /// 登录 model
 //  Data loginModel;
@@ -189,19 +193,33 @@ class AppLoginManager {
 //    }
 //    return null;
 //  }
+
+  ///
+  /// @name autoLogin
+  /// @description 自动登录
+  /// @parameters
+  /// @return
+  /// @author lca
+  /// @date 2019-10-31
+  ///
+  autoLogin(BuildContext context) async {
+    /// 获取配置
+    ResponseData responseData = await DaoManager.interfaceConfigFetch({});
+    if (responseData != null && responseData.model != null) {
+
+    } else {
+
+    }
+
+
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    bool token = sharedPreferences.getBool("token");
+
+//    if (token != null) {
+//      /// 直接登录
 //
-//  ///
-//  /// @name autoLogin
-//  /// @description 自动登录
-//  /// @parameters
-//  /// @return
-//  /// @author lca
-//  /// @date 2019-10-31
-//  ///
-//  autoLogin(BuildContext context) async {
-//    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-//    bool autoLogin = sharedPreferences.getBool("autoLogin");
-//    if (autoLogin != null && autoLogin == true) {
+//
+//
 //      Map<String,String> map = await readUserData();
 //      if (map != null) {
 //        routeToPage(context, map);
@@ -209,9 +227,11 @@ class AppLoginManager {
 //        Navigator.pushNamedAndRemoveUntil(context, "/login", (Route<dynamic> route) => false);
 //      }
 //    } else {
+//
+//
 //      Navigator.pushNamedAndRemoveUntil(context, "/login", (Route<dynamic> route) => false);
 //    }
-//  }
+  }
 
 
 

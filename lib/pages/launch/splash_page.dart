@@ -59,10 +59,8 @@ class SplashScreenState extends State<SplashPage>
   }
 
   void navigationPage() async {
-    //await AppLoginManager.instance.autoLogin(context);
-    Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context){
-      return SelectIdentityPage();
-    }));
+    await AppLoginManager.instance.autoLogin(context);
+
   }
 
   @override
