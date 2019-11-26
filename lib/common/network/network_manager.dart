@@ -39,7 +39,7 @@ class NetworkManager {
   /// @Date: 2019-08-01
   ///
   static get(interface,parameters) async{
-    return await fetch(interface, parameters, {"Accept": 'application/vnd.github.VERSION.full+json'}, Options(method: 'POST'));
+    return await fetch(interface, parameters, {"Accept": 'application/vnd.github.VERSION.full+json'}, Options(method: 'GET'));
   }
 
   ///
@@ -111,6 +111,10 @@ class NetworkManager {
 
     headers["Authorization"] = optionParameters["authorizationCode"];
     headers["client"] = Platform.isIOS ? "iOS" : "android";
+
+    headers["X-Parse-Application-Id"] = "4jXtTizndgVDum5Hjey3";
+    headers["X-Parse-REST-API-Key"] = "S7iGWSBbVRDfeZ5g8pSt";
+    headers["X-Parse-JavaScript-Key"] = "F1lbi2cKvzgIswP4BWNJ";
 
     /// 设置请求options
     if (option != null) {
