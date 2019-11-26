@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_dayuwen/common/const/const.dart';
 import 'package:flutter_dayuwen/common/network/network_manager.dart';
 import 'package:flutter_dayuwen/common/singleton/singleton_manager.dart';
+import 'package:flutter_dayuwen/models/interface_config_mode.dart';
 import 'package:flutter_dayuwen/pages/login/login_model.dart';
 
 ///
@@ -40,15 +41,15 @@ class DaoManager {
   }
 
   ///
-  /// @Method: teacherRecentTaskFetch
+  /// @Method: interfaceConfigFetch
   /// @Parameter:
   /// @ReturnType:
-  /// @Description: 教师获取最近任务
+  /// @Description: 获取配置
   /// @author: lca
-  /// @Date: 2019-09-02
+  /// @Date: 2019-11-26
   ///
-  static Future <ResponseData> teacherRecentTaskFetch(Map<String,dynamic> parameters) async {
-    var response = await NetworkManager.post(Const.teacherRecentTask, parameters);
+  static Future <ResponseData> interfaceConfigFetch(Map<String,dynamic> parameters) async {
+    var response = await NetworkManager.get(Const.interfaceConfig, parameters);
     if (response.result) {
       Utf8Decoder utf8decoder = Utf8Decoder();//修复中文乱码问题
       print("response.data:${response.data}");
@@ -56,14 +57,14 @@ class DaoManager {
       String jsonString = response.data;
 
       var resultMap = json.decode(jsonString);
-      var model = TeacherTaskModel.fromJson(resultMap);
+      var model = InterfaceConfigModel.fromJson(resultMap);
       response.model = model;
       return response;
     } else {
-      throw Exception("登录接口请求失败");
+      throw Exception("获取接口配置请求失败");
     }
   }
-  
+
 
 
 
