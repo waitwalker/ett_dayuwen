@@ -28,12 +28,20 @@ class DaoManager {
       Utf8Decoder utf8decoder = Utf8Decoder();//修复中文乱码问题
       print("response.data:${response.data}");
 
-      String jsonString = response.data;
+      if (response.data is String) {
 
-      var resultMap = json.decode(jsonString);
-      var loginModel = LoginModel.fromJson(resultMap);
-      response.model = loginModel;
-      SingletonManager.sharedInstance.loginModel = loginModel;
+        String jsonString = response.data;
+
+        var resultMap = json.decode(jsonString);
+        var loginModel = LoginModel.fromJson(resultMap);
+        response.model = loginModel;
+        SingletonManager.sharedInstance.loginModel = loginModel;
+      } else {
+        var loginModel = LoginModel.fromJson(response.data);
+        response.model = loginModel;
+        SingletonManager.sharedInstance.loginModel = loginModel;
+      }
+
       return response;
     } else {
       throw Exception("登录接口请求失败");
