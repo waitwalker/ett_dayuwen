@@ -2,11 +2,15 @@ import 'dart:collection';
 import 'dart:convert';
 import 'package:convert/convert.dart';
 import 'package:crypto/crypto.dart';
+import 'package:device_info/device_info.dart';
 import 'package:dio/dio.dart';
 import 'package:connectivity/connectivity.dart';
 import 'dart:io';
 import 'package:event_bus/event_bus.dart';
 import 'package:flutter_dayuwen/common/config/config.dart';
+import 'package:flutter_dayuwen/common/const/const.dart';
+import 'package:flutter_dayuwen/pages/login/app_login_manager.dart';
+import 'package:package_info/package_info.dart';
 
 ///
 /// @Class: NetworkManager
@@ -38,7 +42,7 @@ class NetworkManager {
   /// @Date: 2019-08-01
   ///
   static get(interface,parameters) async{
-    return await fetch(interface, parameters, {"Accept": 'application/vnd.github.VERSION.full+json'}, Options(method: 'POST'));
+    return await fetch(interface, parameters, {"Accept": 'application/vnd.github.VERSION.full+json'}, Options(method: 'GET'));
   }
 
   ///
@@ -111,6 +115,35 @@ class NetworkManager {
     headers["Authorization"] = optionParameters["authorizationCode"];
     headers["client"] = Platform.isIOS ? "iOS" : "android";
 
+
+    if (interface != Const.interfaceConfig) {
+      DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+      PackageInfo packageInfo = await PackageInfo.fromPlatform();
+
+      String phoneSysVersion;
+      String appVersion;
+      String platform;
+      if (Platform.isIOS) {
+        IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+        phoneSysVersion = iosInfo.systemVersion;
+        appVersion = packageInfo.version;
+        platform = "2";
+      } else if (Platform.isAndroid) {
+        AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+        phoneSysVersion = androidInfo.bootloader;
+        appVersion = packageInfo.version;
+        platform = "1";
+      }
+
+      headers["phoneSysVersion"] = phoneSysVersion;
+      headers["appVersion"] = appVersion;
+      headers["platform"] = platform;
+    }
+    headers["X-Parse-Application-Id"] = "4jXtTizndgVDum5Hjey3";
+    headers["X-Parse-REST-API-Key"] = "X-Parse-REST-API-Key";
+    headers["X-Parse-JavaScript-Key"] = "F1lbi2cKvzgIswP4BWNJ";
+
+
     /// 设置请求options
     if (option != null) {
       option.headers = headers;
@@ -161,7 +194,8 @@ class NetworkManager {
     Response response;
     try {
       if (data == null) {
-        response = await dio.request(url, queryParameters: tmpParameters, options: option);
+        response = await dio.request(url, data: tmpParameters, options: option);
+        print("响应数据:$response");
       } else {
         response = await dio.request(url, data: data, options: option);
       }
@@ -297,52 +331,6 @@ class HttpErrorEvent {
   HttpErrorEvent(this.code, this.message);
 }
 
-///
-/// @name Const
-/// @description 常量类
-/// @author lca
-/// @date 2019-09-20
-///
-class Const {
-  /// 登录
-  static const String loginInterface = "login.do";
-
-  /// 教师最近任务
-  static const String teacherRecentTask = "getTeacherHomePageInfo.do";
-
-  /// 教师学科列表
-  static const String teacherSubjectList = "getTeacherSubjectList.do";
-
-  /// 教师课程列表
-  static const String teacherCourseList = "getLessonList.do";
-
-  /// 教师学资源 / 一般任务
-  static const String teacherResource = "getTeacherStudyTaskInfo2.do";
-
-  /// 教师微课程
-  static const String teacherMicroCourse = "getTeacherLittleTaskInfo2.do";
-
-  /// 教师一般任务
-  static const String teacherGeneral = "getTeacherStudyTaskInfo2.do";
-
-  /// 获取个人信息
-  static const String personalInformation = "userInfo.do";
-
-  /// 上传文件
-  static const String uploadAvatar = "uploadUserPhoto.do";
-
-  /// 获取试卷中试题数目
-  static const String questionItems = "getGroupTaskInfo.do";
-
-  /// 教师获取班级通知列表
-  static const String classNoticeList = "getActivityList.do";
-
-  /// 教师获取班级通知详情
-  static const String classNoticeDetail = "getActivityInfo.do";
-
-  /// 学生获取科目列表
-  static const String studentSubject = "getWorkInfo.do";
-}
 
 ///
 /// @name NetworkAssistant
@@ -422,53 +410,27 @@ class NetworkAssistant {
   /// @date 2019-09-20
   ///
   static String getUrl(String interface) {
-    switch (interface) {
-      case Const.loginInterface:
-        return "http://i.im.etiantian.net/study-im-service-2.0/user/login.do";
-        break;
-      case Const.teacherRecentTask:
-        return "https://school.etiantian.com/aixue33/im3.1.2?m=getTeacherHomePageInfo.do";
-        break;
 
-      case Const.teacherSubjectList:
-        return "https://school.etiantian.com/aixue33/im2.0.5?m=getTeacherSubjectList.do";
-        break;
+    if (Config.DEBUG) {
 
-      case Const.teacherCourseList:
-        return "https://school.etiantian.com/aixue33/im2.0?m=getLessonList.do";
-        break;
-
-      case Const.teacherResource:
-        return "https://school.etiantian.com/aixue33/im2.0.1?m=getTeacherStudyTaskInfo2.do";
-        break;
-
-      case Const.teacherMicroCourse:
-        return "https://school.etiantian.com/aixue31/im2.0.1?m=getTeacherLittleTaskInfo2.do";
-        break;
-
-      case Const.personalInformation:
-        return "http://i.im.etiantian.net/study-im-service-2.0/user/userInfo.do";
-        break;
-
-      case Const.uploadAvatar:
-        return "http://i.m.etiantian.com/app-common-service/uploadUserPhoto.do";
-        break;
-
-      case Const.questionItems:
-        return "http://school.etiantian.com/aixue31/im2.0?m=getGroupTaskInfo.do";
-        break;
-      case Const.classNoticeList:
-        return "https://i.im.etiantian.net/shaishai_2_0_0/shaiDynamic/getActivityList.do";
-        break;
-      case Const.classNoticeDetail:
-        return "https://i.im.etiantian.net/shaishai_2_0_0/shaiDynamic/getActivityInfo.do";
-        break;
-      case Const.studentSubject:
-        return "https://school.etiantian.com/aixue33/im3.1.5?m=getWorkInfo.do";
-        break;
-      default:
-        return "";
-        break;
+      switch (interface) {
+        case Const.interfaceConfig:
+          return "https://api.yuwenclub.com/basic/appConfig";
+          break;
+        default:
+          return AppLoginManager.instance.configModel.serverUrl.apiServer + interface;
+          break;
+      }
+    } else {
+      switch (interface) {
+        case Const.loginInterface:
+          return "http://i.im.etiantian.net/study-im-service-2.0/user/login.do";
+          break;
+        default:
+          return "";
+          break;
+      }
     }
+
   }
 }

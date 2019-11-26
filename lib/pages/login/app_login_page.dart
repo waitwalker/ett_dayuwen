@@ -2,7 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_dayuwen/common/network/network_manager.dart';
 import 'package:flutter_dayuwen/common/redux/app_state.dart';
+import 'package:flutter_dayuwen/dao/dao_manager.dart';
+import 'package:flutter_dayuwen/pages/login/app_login_manager.dart';
 import 'package:flutter_dayuwen/pages/login/user_agreement_page.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
@@ -31,7 +34,6 @@ class _AppLoginState extends State<AppLoginPage> {
   bool _loginEnable = false;
 
   String _codeButtonTitle = "获取验证码";
-
   Timer countDownTimer;
 
   ///
@@ -43,6 +45,7 @@ class _AppLoginState extends State<AppLoginPage> {
   /// @date 2019-11-25
   ///
   _startCountDownFunction() {
+    _codeFetch();
     countDownTimer?.cancel();//如果已存在先取消置空
     countDownTimer = null;
     countDownTimer = Timer.periodic(new Duration(seconds: 1), (t){
@@ -51,19 +54,42 @@ class _AppLoginState extends State<AppLoginPage> {
           _codeButtonEnable = false;
           _codeButtonTitle = "重新获取(${60-t.tick})";
         } else {
-
           _cancelCountDownTimer();
         }
       });
     });
   }
 
+  ///
+  /// @name _cancelCountDownTimer
+  /// @description 取消倒计时
+  /// @parameters
+  /// @return
+  /// @author lca
+  /// @date 2019-11-26
+  ///
   _cancelCountDownTimer() {
     _codeButtonEnable = true;
     _codeButtonTitle = '获取验证码';
     countDownTimer.cancel();
     countDownTimer = null;
   }
+
+  _codeFetch() async {
+    ResponseData responseData = await DaoManager.codeFetch({"phone":_numberController.text});
+    if (responseData != null && responseData.model != null) {
+      if (responseData.model.code == 403) {
+
+      } else if (responseData.model.code == 500) {
+
+      } else if (responseData.model.code == 200) {
+
+      }
+
+    }
+  }
+
+
   @override
   void initState() {
     _numberController = TextEditingController();
@@ -93,15 +119,25 @@ class _AppLoginState extends State<AppLoginPage> {
               },
             ),
           ),
-          body: Padding(
-            padding: EdgeInsets.only(left: 40,right: 40,top: 30),
-            child: Column(
-              children: <Widget>[
-                Container(
+          body: Column(
+            children: <Widget>[
+              Padding(padding: EdgeInsets.only(top: 40)),
+              Padding(
+                padding: EdgeInsets.only(left: 30),
+                child: Container(
                   alignment: Alignment.centerLeft,
-                  child: Text(widget.index == 0 ? "学生登录" : "老师登录",style: TextStyle(fontSize: 25,fontWeight: FontWeight.w500),),),
-                Padding(padding: EdgeInsets.only(top: 40)),
-                TextField(
+                  child: Text(
+                    widget.index == 0 ? "学生登录" : "老师登录",
+                    style: TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 40,left: 20,right: 20),
+                child: TextField(
                   controller: _numberController,
                   focusNode: _numberFocusNode,
                   decoration: InputDecoration(
@@ -128,10 +164,16 @@ class _AppLoginState extends State<AppLoginPage> {
 
                   keyboardType: TextInputType.phone,
                 ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 20,right: 20),
+                child: Divider(height: 3.0,color: Colors.grey,),
+              ),
 
-                Divider(height: 3.0,color: Colors.grey,),
-                Padding(padding: EdgeInsets.only(top: 20)),
-                Row(
+              Padding(padding: EdgeInsets.only(top: 20)),
+              Padding(
+                padding: EdgeInsets.only(left: 20,right: 20),
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Container(
@@ -159,44 +201,72 @@ class _AppLoginState extends State<AppLoginPage> {
                     FlatButton(
                       child: Text(_codeButtonTitle,style: TextStyle(fontSize: 14),),
                       onPressed: _codeButtonEnable ? _startCountDownFunction : null,
-
                     ),
                   ],
                 ),
+              ),
 
-                Divider(height: 3.0,color: Colors.grey,),
+              Padding(
+                padding: EdgeInsets.only(left: 20,right: 20),
+                child: Divider(height: 3.0,color: Colors.grey,),
+              ),
 
+              Padding(padding: EdgeInsets.only(top: 40)),
 
-                Padding(padding: EdgeInsets.only(top: 40)),
-                SizedBox(
+              Padding(
+                padding: EdgeInsets.only(left: 20,right: 20),
+                child: SizedBox(
                   width: double.infinity,
                   child: CupertinoButton(
                     child: Text("登录"),
                     color: Colors.amber,
                     disabledColor: Colors.grey,
-                    onPressed: _loginEnable ? (){
+                    onPressed: _loginEnable ? () async{
                       _packUpKeyboard();
+
+                      ResponseData responseData = await DaoManager.loginFetch({"phone":_numberController.text,"code":_codeController.text,"role":widget.index},);
+
+                      if (responseData != null && responseData.model != null) {
+                        if (responseData.model.code == 200) {
+                          if (responseData.model.userInfo.name == null || responseData.model.userInfo.name.length == 0) {
+                            widget.index == 0 ?
+                            Navigator.pushNamedAndRemoveUntil(context, "/student_home", (Route<dynamic> route) => false) :
+                            Navigator.pushNamedAndRemoveUntil(context, "/teacher_home", (Route<dynamic> route) => false);
+                          } else {
+                            widget.index == 0 ?
+                            Navigator.pushNamedAndRemoveUntil(context, "/student_home", (Route<dynamic> route) => false) :
+                            Navigator.pushNamedAndRemoveUntil(context, "/teacher_home", (Route<dynamic> route) => false);
+                          }
+                        } else if (responseData.model.code == 402) {
+                          /// 验证码已失效
+
+                        } else if (responseData.model.code == 500) {
+                          /// 验证码已过期请重新获取
+
+                        }
+                      }
+
                     } : null,
                   ),
                 ),
+              ),
 
-                Padding(padding: EdgeInsets.only(top: 20)),
-                Row(
-                  children: <Widget>[
-                    Text("登录即代表您已同意"),
-                    GestureDetector(
-                      child: Text("《龙之门大语文用户协议》",style: TextStyle(fontSize: 14,color: Colors.deepOrangeAccent),),
-                      onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context){
-                          return UserAgreementPage();
-                        }));
-                      },
-                    )
-                  ],
-                ),
-
-              ],
-            ),
+              Padding(padding: EdgeInsets.only(top: 20)),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text("登录即代表您已同意",style: TextStyle(fontSize: 13),),
+                  GestureDetector(
+                    child: Text("《龙之门大语文用户协议》",style: TextStyle(fontSize: 13,color: Colors.deepOrangeAccent),),
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context){
+                        return UserAgreementPage();
+                      }));
+                    },
+                  )
+                ],
+              ),
+            ],
           ),
         ),
         onTap: (){

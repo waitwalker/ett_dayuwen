@@ -11,6 +11,6 @@ class TeacherHomePage extends StatefulWidget {
 class _TeacherHomeState extends State<TeacherHomePage> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Container(color: Colors.white,);
   }
 }

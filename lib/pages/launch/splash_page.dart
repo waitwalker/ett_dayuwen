@@ -2,8 +2,10 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dayuwen/common/locale/locale_mamager.dart';
+import 'package:flutter_dayuwen/common/network/network_manager.dart';
 import 'package:flutter_dayuwen/common/redux/app_state.dart';
 import 'package:flutter_dayuwen/common/theme/theme_manager.dart';
+import 'package:flutter_dayuwen/dao/dao_manager.dart';
 import 'package:flutter_dayuwen/pages/login/app_login_manager.dart';
 import 'package:flutter_dayuwen/pages/login/select_identity_page.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -57,10 +59,8 @@ class SplashScreenState extends State<SplashPage>
   }
 
   void navigationPage() async {
-    //await AppLoginManager.instance.autoLogin(context);
-    Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context){
-      return SelectIdentityPage();
-    }));
+    await AppLoginManager.instance.autoLogin(context);
+
   }
 
   @override
@@ -79,7 +79,6 @@ class SplashScreenState extends State<SplashPage>
 
   @override
   void initState() {
-    super.initState();
     animationController = AnimationController(
         vsync: this, duration: Duration(milliseconds: 1500));
     animation =
@@ -88,6 +87,8 @@ class SplashScreenState extends State<SplashPage>
     animation.addListener(() => this.setState(() {}));
     animationController.forward();
     startTime();
+
+    super.initState();
   }
 
   @override
