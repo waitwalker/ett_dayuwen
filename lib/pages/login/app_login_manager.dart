@@ -253,32 +253,7 @@ class AppLoginManager {
     String token = sharedPreferences.getString("token");
 
     if (token != null) {
-      /// 直接登录
-      DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
-      IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
 
-      PackageInfo packageInfo = await PackageInfo.fromPlatform();
-
-      String phoneSysVersion;
-      String appVersion;
-      String platform;
-      if (Platform.isIOS) {
-        phoneSysVersion = iosInfo.systemVersion;
-        appVersion = packageInfo.version;
-        platform = "2";
-      } else if (Platform.isAndroid) {
-        phoneSysVersion = androidInfo.bootloader;
-        appVersion = packageInfo.version;
-        platform = "1";
-      }
-
-      Map <String,dynamic> parameter = {
-        "phoneSysVersion":phoneSysVersion,
-        "appVersion":appVersion,
-        "platform":platform,
-        "x-token":token,
-      };
 
     } else {
       _hideLoading(context);

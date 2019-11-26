@@ -2,7 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_dayuwen/common/network/network_manager.dart';
 import 'package:flutter_dayuwen/common/redux/app_state.dart';
+import 'package:flutter_dayuwen/dao/dao_manager.dart';
 import 'package:flutter_dayuwen/pages/login/user_agreement_page.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
@@ -31,7 +33,6 @@ class _AppLoginState extends State<AppLoginPage> {
   bool _loginEnable = false;
 
   String _codeButtonTitle = "获取验证码";
-
   Timer countDownTimer;
 
   ///
@@ -43,6 +44,7 @@ class _AppLoginState extends State<AppLoginPage> {
   /// @date 2019-11-25
   ///
   _startCountDownFunction() {
+    _codeFetch();
     countDownTimer?.cancel();//如果已存在先取消置空
     countDownTimer = null;
     countDownTimer = Timer.periodic(new Duration(seconds: 1), (t){
@@ -51,7 +53,6 @@ class _AppLoginState extends State<AppLoginPage> {
           _codeButtonEnable = false;
           _codeButtonTitle = "重新获取(${60-t.tick})";
         } else {
-
           _cancelCountDownTimer();
         }
       });
@@ -72,6 +73,15 @@ class _AppLoginState extends State<AppLoginPage> {
     countDownTimer.cancel();
     countDownTimer = null;
   }
+
+  _codeFetch() async {
+    ResponseData responseData = await DaoManager.codeFetch({"phone":_numberController.text});
+    if (responseData != null && responseData.model != null) {
+
+    }
+  }
+
+
   @override
   void initState() {
     _numberController = TextEditingController();
@@ -152,7 +162,6 @@ class _AppLoginState extends State<AppLoginPage> {
                 child: Divider(height: 3.0,color: Colors.grey,),
               ),
 
-
               Padding(padding: EdgeInsets.only(top: 20)),
               Padding(
                 padding: EdgeInsets.only(left: 20,right: 20),
@@ -184,7 +193,6 @@ class _AppLoginState extends State<AppLoginPage> {
                     FlatButton(
                       child: Text(_codeButtonTitle,style: TextStyle(fontSize: 14),),
                       onPressed: _codeButtonEnable ? _startCountDownFunction : null,
-
                     ),
                   ],
                 ),
@@ -227,7 +235,6 @@ class _AppLoginState extends State<AppLoginPage> {
                   )
                 ],
               ),
-
             ],
           ),
         ),
