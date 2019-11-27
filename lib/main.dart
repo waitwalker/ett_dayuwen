@@ -4,6 +4,7 @@ import 'package:flutter_dayuwen/common/redux/app_state.dart';
 import 'package:flutter_dayuwen/pages/launch/splash_page.dart';
 import 'package:flutter_dayuwen/pages/login/app_login_page.dart';
 import 'package:flutter_dayuwen/pages/login/select_identity_page.dart';
+import 'package:flutter_dayuwen/pages/login/supplementary_info_page.dart';
 import 'package:flutter_dayuwen/pages/placeholder/placeholder_page.dart';
 import 'package:flutter_dayuwen/pages/student_app/student_home_page.dart';
 import 'package:flutter_dayuwen/pages/teacher_page/teacher_home_page.dart';
@@ -64,7 +65,7 @@ class App extends StatelessWidget {
           locale: store.state.locale,
           supportedLocales: [store.state.locale,Locale('zh', 'Hans'),],
           theme: store.state.theme.themeData,
-          home: MTTLocalizations(child: SplashPage(),),
+          home: SupplementaryInfoPage(),//MTTLocalizations(child: SplashPage(),),
           routes: <String, WidgetBuilder>{
             "/splash": (BuildContext context) => SplashPage(),
             "/select_identity": (BuildContext context) => SelectIdentityPage(),
