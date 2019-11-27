@@ -2,7 +2,9 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dayuwen/common/network/network_manager.dart';
 import 'package:flutter_dayuwen/common/redux/app_state.dart';
+import 'package:flutter_dayuwen/dao/dao_manager.dart';
 import 'package:flutter_dayuwen/pages/login/picker_data.dart';
 import 'package:flutter_picker/flutter_picker.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -26,6 +28,7 @@ class _SupplementaryInfoState extends State<SupplementaryInfoPage> {
   FocusNode _nameFocus = FocusNode();
   FocusNode _gradeFocus = FocusNode();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  bool _nextEnable = false;
 
   @override
   void initState() {
@@ -137,6 +140,39 @@ class _SupplementaryInfoState extends State<SupplementaryInfoPage> {
               Padding(
                 padding: EdgeInsets.only(left: 20,right: 20),
                 child: Divider(height: 3.0,color: Colors.grey,),
+              ),
+
+              Padding(
+                padding: EdgeInsets.only(left: 20,right: 20,top: 40),
+                child: SizedBox(
+                  width: double.infinity,
+                  child: CupertinoButton(
+                    child: Text("下一步"),
+                    color: Colors.amber,
+                    disabledColor: Colors.grey,
+                    onPressed: _nextEnable ? () async{
+                      _packUpKeyboard();
+
+                      ResponseData responseData = await DaoManager.loginFetch({"name":_nameController.text,"grade":_gradeController.text,"image":""},);
+
+                      if (responseData != null && responseData.model != null) {
+                        if (responseData.model.code == 200) {
+                          if (responseData.model.userInfo.name == null || responseData.model.userInfo.name.length == 0) {
+
+                          } else {
+                          }
+                        } else if (responseData.model.code == 402) {
+                          /// 验证码已失效
+
+                        } else if (responseData.model.code == 500) {
+                          /// 验证码已过期请重新获取
+
+                        }
+                      }
+
+                    } : null,
+                  ),
+                ),
               ),
             ],
           ),
