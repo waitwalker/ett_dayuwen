@@ -8,6 +8,7 @@ import 'package:flutter_dayuwen/dao/dao_manager.dart';
 import 'package:flutter_dayuwen/pages/login/app_login_manager.dart';
 import 'package:flutter_dayuwen/pages/login/user_agreement_page.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 ///
 /// @name AppLoginPage
@@ -228,10 +229,10 @@ class _AppLoginState extends State<AppLoginPage> {
 
                       if (responseData != null && responseData.model != null) {
                         if (responseData.model.code == 200) {
+                          SharedPreferences preference = await SharedPreferences.getInstance();
+                          preference.setString("token", AppLoginManager.instance.loginModel.token);
                           if (responseData.model.userInfo.name == null || responseData.model.userInfo.name.length == 0) {
-                            widget.index == 0 ?
-                            Navigator.pushNamedAndRemoveUntil(context, "/student_home", (Route<dynamic> route) => false) :
-                            Navigator.pushNamedAndRemoveUntil(context, "/teacher_home", (Route<dynamic> route) => false);
+                            Navigator.pushNamedAndRemoveUntil(context, "/complete_info", (Route<dynamic> route) => false);
                           } else {
                             widget.index == 0 ?
                             Navigator.pushNamedAndRemoveUntil(context, "/student_home", (Route<dynamic> route) => false) :

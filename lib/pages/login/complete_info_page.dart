@@ -5,24 +5,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dayuwen/common/network/network_manager.dart';
 import 'package:flutter_dayuwen/common/redux/app_state.dart';
 import 'package:flutter_dayuwen/dao/dao_manager.dart';
+import 'package:flutter_dayuwen/pages/login/app_login_manager.dart';
 import 'package:flutter_dayuwen/pages/login/picker_data.dart';
 import 'package:flutter_picker/flutter_picker.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
 ///
-/// @name SupplementaryInfoPage
+/// @name CompleteInfoPage
 /// @description 完善信息页面
 /// @author lca
 /// @date 2019-11-22
 ///
-class SupplementaryInfoPage extends StatefulWidget {
+class CompleteInfoPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return _SupplementaryInfoState();
+    return _CompleteInfoState();
   }
 }
 
-class _SupplementaryInfoState extends State<SupplementaryInfoPage> {
+class _CompleteInfoState extends State<CompleteInfoPage> {
   TextEditingController _nameController;
   TextEditingController _gradeController;
   FocusNode _nameFocus = FocusNode();
@@ -148,7 +149,7 @@ class _SupplementaryInfoState extends State<SupplementaryInfoPage> {
                     onPressed: _nextEnable ? () async{
                       _packUpKeyboard();
 
-                      ResponseData responseData = await DaoManager.loginFetch({"name":_nameController.text,"grade":_gradeController.text,"image":""},);
+                      ResponseData responseData = await DaoManager.completeFetch({"name":_nameController.text,"grade":_gradeController.text,},);
 
                       if (responseData != null && responseData.model != null) {
                         if (responseData.model.code == 200) {
