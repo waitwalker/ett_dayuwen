@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dayuwen/common/redux/app_state.dart';
+import 'package:flutter_dayuwen/pages/login/picker_data.dart';
+import 'package:flutter_picker/flutter_picker.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 
 ///
 /// @name SupplementaryInfoPage
@@ -22,7 +25,7 @@ class _SupplementaryInfoState extends State<SupplementaryInfoPage> {
   TextEditingController _gradeController;
   FocusNode _nameFocus = FocusNode();
   FocusNode _gradeFocus = FocusNode();
-
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +35,7 @@ class _SupplementaryInfoState extends State<SupplementaryInfoPage> {
           _packUpKeyboard();
         },
         child: Scaffold(
+          key: _scaffoldKey,
           body: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
@@ -106,6 +110,7 @@ class _SupplementaryInfoState extends State<SupplementaryInfoPage> {
                   onTap: (){
                     print("点击这里");
                     _packUpKeyboard();
+                    showPicker(context);
                   },
                   onEditingComplete: (){
 
@@ -132,6 +137,34 @@ class _SupplementaryInfoState extends State<SupplementaryInfoPage> {
       );
     });
   }
+
+  ///
+  /// @name showPicker
+  /// @description 年级选择器添加完成
+  /// @parameters
+  /// @return
+  /// @author lca
+  /// @date 2019-11-27
+  ///
+  showPicker(BuildContext context) {
+    Picker picker = Picker(
+        adapter: PickerDataAdapter<String>(pickerdata: JsonDecoder().convert(PickerData)),
+        cancelText: "取消",
+        confirmText: "确认",
+        changeToFirst: true,
+        textAlign: TextAlign.left,
+        textStyle: const TextStyle(color: Colors.grey,fontSize: 20),
+        selectedTextStyle: TextStyle(color: Colors.red,fontSize: 20),
+        columnPadding: const EdgeInsets.all(8.0),
+        onConfirm: (Picker picker, List value) {
+          print(value.toString());
+          print(picker.getSelectedValues());
+          _gradeController.text = value.toString();
+        }
+    );
+    picker.show(_scaffoldKey.currentState);
+  }
+
 
   ///
   /// @name _packUpKeyboard
