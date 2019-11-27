@@ -72,10 +72,10 @@ class _SupplementaryInfoState extends State<SupplementaryInfoPage> {
                 ),
               ),
 
-              Padding(padding: EdgeInsets.only(top: 40)),
+              Padding(padding: EdgeInsets.only(top: 20)),
 
               Padding(
-                padding: EdgeInsets.only(top: 40,left: 20,right: 20),
+                padding: EdgeInsets.only(top: 20,left: 20,right: 20),
                 child: TextField(
                   controller: _nameController,
                   focusNode: _nameFocus,
@@ -91,9 +91,7 @@ class _SupplementaryInfoState extends State<SupplementaryInfoPage> {
 
                   onChanged:(text){
                     print("手机号输入:$text");
-                    if (text.length > 11) {
-                      _nameController.text = text.substring(0,11);
-                    }
+                    _nextButtonState();
                   },
 
                   keyboardType: TextInputType.text,
@@ -106,12 +104,12 @@ class _SupplementaryInfoState extends State<SupplementaryInfoPage> {
               ),
 
               Padding(
-                padding: EdgeInsets.only(top: 40,left: 20,right: 20),
+                padding: EdgeInsets.only(top: 20,left: 20,right: 20),
                 child: TextField(
                   controller: _gradeController,
                   focusNode: _gradeFocus,
                   decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.person_outline,color: Colors.grey,size: 24,),
+                    prefixIcon: Icon(Icons.format_list_bulleted,color: Colors.grey,size: 24,),
                     suffixIcon: Icon(Icons.keyboard_arrow_down,color: Colors.grey,size: 30,),
                     hintText: "填写学生年级",
                     hintStyle: TextStyle(color: Colors.grey),
@@ -127,10 +125,7 @@ class _SupplementaryInfoState extends State<SupplementaryInfoPage> {
                   },
 
                   onChanged:(text){
-                    print("手机号输入:$text");
-                    if (text.length > 11) {
-                      _gradeController.text = text.substring(0,11);
-                    }
+
                   },
 
                   keyboardType: TextInputType.text,
@@ -202,14 +197,31 @@ class _SupplementaryInfoState extends State<SupplementaryInfoPage> {
         onConfirm: (Picker picker, List value) {
           print(value.toString());
           print(picker.getSelectedValues());
-          setState(() {
-            _gradeController.text = picker.getSelectedValues().first.toString();
-          });
+          _gradeController.text = picker.getSelectedValues().first.toString();
+          _nextButtonState();
         }
     );
     picker.show(_scaffoldKey.currentState);
   }
 
+  ///
+  /// @name _nextButtonState
+  /// @description 下一步按钮状态
+  /// @parameters
+  /// @return
+  /// @author lca
+  /// @date 2019-11-25
+  ///
+  _nextButtonState() {
+    if (_nameController.text.length > 0 && _gradeController.text.length > 0) {
+      _nextEnable = true;
+    } else {
+      _nextEnable = false;
+    }
+    setState(() {
+
+    });
+  }
 
   ///
   /// @name _packUpKeyboard
