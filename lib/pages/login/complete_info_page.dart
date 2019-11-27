@@ -47,14 +47,12 @@ class _CompleteInfoState extends State<CompleteInfoPage> {
         },
         child: Scaffold(
           key: _scaffoldKey,
+          appBar: AppBar(
+            title: Text("完善信息",style: TextStyle(fontSize: 25,fontWeight: FontWeight.w500),),
+          ),
           body: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Padding(padding: EdgeInsets.only(top: 100)),
-              Container(
-                alignment: Alignment.center,
-                child: Text("完善信息",style: TextStyle(fontSize: 25,fontWeight: FontWeight.w500),),
-              ),
               Padding(padding: EdgeInsets.only(top: 40)),
 
               Container(
