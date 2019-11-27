@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_dayuwen/common/const/const.dart';
 import 'package:flutter_dayuwen/common/network/network_manager.dart';
 import 'package:flutter_dayuwen/common/singleton/singleton_manager.dart';
+import 'package:flutter_dayuwen/models/complete_userInfo_model.dart';
 import 'package:flutter_dayuwen/models/interface_config_mode.dart';
 import 'package:flutter_dayuwen/models/login_model.dart';
 import 'package:flutter_dayuwen/pages/login/app_login_manager.dart';
@@ -124,13 +125,15 @@ class DaoManager {
         String jsonString = response.data;
 
         var resultMap = json.decode(jsonString);
-        var model = LoginModel.fromJson(resultMap);
+        var model = CompleteUserInfoModel.fromJson(resultMap);
         response.model = model;
       } else {
-        var model = LoginModel.fromJson(response.data);
+        var model = CompleteUserInfoModel.fromJson(response.data);
         response.model = model;
       }
-      AppLoginManager.instance.loginModel = response.model;
+      AppLoginManager.instance.loginModel.userInfo.name = response.model.result.name;
+      AppLoginManager.instance.loginModel.userInfo.grade = response.model.result.grade;
+      AppLoginManager.instance.loginModel.userInfo.updatedAt = response.model.result.updatedAt;
       return response;
     } else {
       throw Exception("获取接口配置请求失败");

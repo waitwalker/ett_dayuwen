@@ -228,6 +228,7 @@ class _AppLoginState extends State<AppLoginPage> {
                       ResponseData responseData = await DaoManager.loginFetch({"phone":_numberController.text,"code":_codeController.text,"role":widget.index},);
 
                       if (responseData != null && responseData.model != null) {
+                        AppLoginManager.instance.loginModel.userType = AppLoginManager.instance.loginModel.userInfo.role;
                         if (responseData.model.code == 200) {
                           SharedPreferences preference = await SharedPreferences.getInstance();
                           preference.setString("token", AppLoginManager.instance.loginModel.token);

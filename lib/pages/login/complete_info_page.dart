@@ -152,12 +152,12 @@ class _CompleteInfoState extends State<CompleteInfoPage> {
                       ResponseData responseData = await DaoManager.completeFetch({"name":_nameController.text,"grade":_gradeController.text,},);
 
                       if (responseData != null && responseData.model != null) {
+                        AppLoginManager.instance.loginModel.userType = AppLoginManager.instance.loginModel.userInfo.role;
                         if (responseData.model.code == 200) {
-                          if (responseData.model.userInfo.name == null || responseData.model.userInfo.name.length == 0) {
-
-                          } else {
-                          }
-                        } else if (responseData.model.code == 402) {
+                          AppLoginManager.instance.loginModel.userType == 0 ?
+                          Navigator.pushNamedAndRemoveUntil(context, "/student_home", (Route<dynamic> route) => false) :
+                          Navigator.pushNamedAndRemoveUntil(context, "/teacher_home", (Route<dynamic> route) => false);
+                        } else if (responseData.model.code == 401) {
                           /// 验证码已失效
 
                         } else if (responseData.model.code == 500) {

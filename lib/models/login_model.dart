@@ -10,6 +10,7 @@ class LoginModel {
   UserInfo userInfo;
   String token;
   String message;
+  int userType;
 
   LoginModel({this.code, this.userInfo, this.token, this.message});
 
