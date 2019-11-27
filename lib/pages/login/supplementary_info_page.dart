@@ -28,6 +28,13 @@ class _SupplementaryInfoState extends State<SupplementaryInfoPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
+  void initState() {
+    _nameController =TextEditingController();
+    _gradeController =TextEditingController();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return StoreBuilder<AppState>(builder: (context, store) {
       return GestureDetector(
@@ -159,7 +166,9 @@ class _SupplementaryInfoState extends State<SupplementaryInfoPage> {
         onConfirm: (Picker picker, List value) {
           print(value.toString());
           print(picker.getSelectedValues());
-          _gradeController.text = value.toString();
+          setState(() {
+            _gradeController.text = picker.getSelectedValues().first.toString();
+          });
         }
     );
     picker.show(_scaffoldKey.currentState);
