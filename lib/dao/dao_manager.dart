@@ -3,8 +3,10 @@ import 'package:dio/dio.dart';
 import 'package:flutter_dayuwen/common/const/const.dart';
 import 'package:flutter_dayuwen/common/network/network_manager.dart';
 import 'package:flutter_dayuwen/common/singleton/singleton_manager.dart';
+import 'package:flutter_dayuwen/models/complete_userInfo_model.dart';
 import 'package:flutter_dayuwen/models/interface_config_mode.dart';
 import 'package:flutter_dayuwen/models/login_model.dart';
+import 'package:flutter_dayuwen/pages/login/app_login_manager.dart';
 
 ///
 /// @name DaoManager
@@ -35,11 +37,11 @@ class DaoManager {
         var resultMap = json.decode(jsonString);
         var loginModel = LoginModel.fromJson(resultMap);
         response.model = loginModel;
-        SingletonManager.sharedInstance.loginModel = loginModel;
+        AppLoginManager.instance.loginModel = loginModel;
       } else {
         var loginModel = LoginModel.fromJson(response.data);
         response.model = loginModel;
-        SingletonManager.sharedInstance.loginModel = loginModel;
+        AppLoginManager.instance.loginModel = loginModel;
       }
 
       return response;
@@ -77,6 +79,14 @@ class DaoManager {
     }
   }
 
+  ///
+  /// @name codeFetch
+  /// @description 获取验证码
+  /// @parameters
+  /// @return
+  /// @author lca
+  /// @date 2019-11-27
+  ///
   static Future <ResponseData> codeFetch(Map<String,dynamic> parameters) async {
     var response = await NetworkManager.post(Const.codeInterface, parameters);
     if (response.result) {
@@ -92,6 +102,38 @@ class DaoManager {
         var model = InterfaceConfigModel.fromJson(response.data);
         response.model = model;
       }
+      return response;
+    } else {
+      throw Exception("获取接口配置请求失败");
+    }
+  }
+
+  ///
+  /// @name codeFetch
+  /// @description 获取验证码
+  /// @parameters
+  /// @return
+  /// @author lca
+  /// @date 2019-11-27
+  ///
+  static Future <ResponseData> completeFetch(Map<String,dynamic> parameters) async {
+    var response = await NetworkManager.post(Const.completeUserInfoInterface, parameters);
+    if (response.result) {
+      Utf8Decoder utf8decoder = Utf8Decoder();//修复中文乱码问题
+      print("response.data:${response.data}");
+      if (response.data is String) {
+        String jsonString = response.data;
+
+        var resultMap = json.decode(jsonString);
+        var model = CompleteUserInfoModel.fromJson(resultMap);
+        response.model = model;
+      } else {
+        var model = CompleteUserInfoModel.fromJson(response.data);
+        response.model = model;
+      }
+      AppLoginManager.instance.loginModel.userInfo.name = response.model.result.name;
+      AppLoginManager.instance.loginModel.userInfo.grade = response.model.result.grade;
+      AppLoginManager.instance.loginModel.userInfo.updatedAt = response.model.result.updatedAt;
       return response;
     } else {
       throw Exception("获取接口配置请求失败");

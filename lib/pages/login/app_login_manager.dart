@@ -8,6 +8,7 @@ import 'package:flutter_dayuwen/common/database/database_manager.dart';
 import 'package:flutter_dayuwen/common/network/network_manager.dart';
 import 'package:flutter_dayuwen/dao/dao_manager.dart';
 import 'package:flutter_dayuwen/models/interface_config_mode.dart';
+import 'package:flutter_dayuwen/models/login_model.dart';
 import 'package:package_info/package_info.dart';
 
 import 'package:page_transition/page_transition.dart';
@@ -47,8 +48,8 @@ class AppLoginManager {
   /// 配置model
   Result configModel;
 
-  /// 登录 model
-//  Data loginModel;
+  /// 登录model
+  LoginModel loginModel;
 //
 //  ///
 //  /// @name routeToPage

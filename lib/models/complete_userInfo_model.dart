@@ -1,41 +1,32 @@
-
 ///
-/// @name LoginModel
-/// @description 登录model
+/// @name CompleteUserInfoModel
+/// @description 完善用户信息
 /// @author lca
-/// @date 2019-11-26
+/// @date 2019-11-27
 ///
-class LoginModel {
+class CompleteUserInfoModel {
   int code;
-  UserInfo userInfo;
-  String token;
-  String message;
-  int userType;
+  Result result;
 
-  LoginModel({this.code, this.userInfo, this.token, this.message});
+  CompleteUserInfoModel({this.code, this.result});
 
-  LoginModel.fromJson(Map<String, dynamic> json) {
+  CompleteUserInfoModel.fromJson(Map<String, dynamic> json) {
     code = json['code'];
-    userInfo = json['userInfo'] != null
-        ? new UserInfo.fromJson(json['userInfo'])
-        : null;
-    token = json['token'];
-    message = json['message'];
+    result =
+    json['result'] != null ? new Result.fromJson(json['result']) : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['code'] = this.code;
-    if (this.userInfo != null) {
-      data['userInfo'] = this.userInfo.toJson();
+    if (this.result != null) {
+      data['result'] = this.result.toJson();
     }
-    data['token'] = this.token;
-    data['message'] = this.message;
     return data;
   }
 }
 
-class UserInfo {
+class Result {
   String phone;
   String areaCode;
   String name;
@@ -48,7 +39,7 @@ class UserInfo {
   String updatedAt;
   String objectId;
 
-  UserInfo(
+  Result(
       {this.phone,
         this.areaCode,
         this.name,
@@ -61,7 +52,7 @@ class UserInfo {
         this.updatedAt,
         this.objectId});
 
-  UserInfo.fromJson(Map<String, dynamic> json) {
+  Result.fromJson(Map<String, dynamic> json) {
     phone = json['phone'];
     areaCode = json['areaCode'];
     name = json['name'];

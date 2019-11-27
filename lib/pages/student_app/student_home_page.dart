@@ -11,6 +11,10 @@ class StudentHomePage extends StatefulWidget {
 class _StudentHomeState extends State<StudentHomePage> {
   @override
   Widget build(BuildContext context) {
-    return Container(color: Colors.white,)
+    return Container(color: Colors.white,
+      child: OutlineButton(child: Text("退出"),onPressed: (){
+        Navigator.pushNamedAndRemoveUntil(context, "/select_identity", (Route<dynamic> route) => false);
+      },),
+    );
   }
 }

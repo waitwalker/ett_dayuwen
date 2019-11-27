@@ -11,6 +11,7 @@ import 'package:flutter_dayuwen/common/config/config.dart';
 import 'package:flutter_dayuwen/common/const/const.dart';
 import 'package:flutter_dayuwen/pages/login/app_login_manager.dart';
 import 'package:package_info/package_info.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 ///
 /// @Class: NetworkManager
@@ -123,6 +124,8 @@ class NetworkManager {
       String phoneSysVersion;
       String appVersion;
       String platform;
+      SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+      String token = sharedPreferences.getString("token");
       if (Platform.isIOS) {
         IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
         phoneSysVersion = iosInfo.systemVersion;
@@ -138,6 +141,7 @@ class NetworkManager {
       headers["phoneSysVersion"] = phoneSysVersion;
       headers["appVersion"] = appVersion;
       headers["platform"] = platform;
+      headers["x-token"] = token;
     }
     headers["X-Parse-Application-Id"] = "4jXtTizndgVDum5Hjey3";
     headers["X-Parse-REST-API-Key"] = "X-Parse-REST-API-Key";
