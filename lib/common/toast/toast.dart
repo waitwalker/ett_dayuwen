@@ -10,13 +10,21 @@ import 'package:fluttertoast/fluttertoast.dart';
 ///
 class ETTToast {
 
-  static toast(String message) {
+  ///
+  /// @name toast
+  /// @description 弹出toast
+  /// @parameters message 消息
+  /// @return
+  /// @author lca
+  /// @date 2019-11-28
+  ///
+  static show(String message) {
     Fluttertoast.showToast(
         msg: message,
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.CENTER,
-        timeInSecForIos: 1,
-        backgroundColor: Colors.red,
+        timeInSecForIos: 2,
+        backgroundColor: Colors.black,
         textColor: Colors.white,
         fontSize: 16.0
     );

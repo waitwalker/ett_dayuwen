@@ -224,14 +224,11 @@ class _AppLoginState extends State<AppLoginPage> {
                     disabledColor: Colors.grey,
                     onPressed: _loginEnable ? () async{
                       _packUpKeyboard();
-
-                      ETTToast.toast("登录按钮点击了");
-
-                      return;
-
                       ResponseData responseData = await DaoManager.loginFetch({"phone":_numberController.text,"code":_codeController.text,"role":widget.index},);
 
                       if (responseData != null && responseData.model != null) {
+                        String message = responseData.model.message;
+
                         AppLoginManager.instance.loginModel.userType = AppLoginManager.instance.loginModel.userInfo.role;
                         if (responseData.model.code == 200) {
                           SharedPreferences preference = await SharedPreferences.getInstance();
@@ -245,10 +242,24 @@ class _AppLoginState extends State<AppLoginPage> {
                           }
                         } else if (responseData.model.code == 402) {
                           /// 验证码已失效
-
+                          if (message != null || message.length != 0) {
+                            ETTToast.show(message + ":${responseData.code}");
+                          } else {
+                            ETTToast.show("此验证码已失效:${responseData.code}");
+                          }
+                        } else if (responseData.model.code == 403) {
+                          /// 验证码校验失败
+                          if (message != null || message.length != 0) {
+                            ETTToast.show(message + ":${responseData.code}");
+                          } else {
+                            ETTToast.show("验证码校验失败:${responseData.code}");
+                          }
                         } else if (responseData.model.code == 500) {
-                          /// 验证码已过期请重新获取
-
+                          if (message != null || message.length != 0) {
+                            ETTToast.show(message + ":${responseData.code}");
+                          } else {
+                            ETTToast.show("有些问题,请稍后重试!${responseData.code}");
+                          }
                         }
                       }
 
