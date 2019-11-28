@@ -1,8 +1,6 @@
 import 'dart:convert';
-import 'package:dio/dio.dart';
 import 'package:flutter_dayuwen/common/const/const.dart';
 import 'package:flutter_dayuwen/common/network/network_manager.dart';
-import 'package:flutter_dayuwen/common/singleton/singleton_manager.dart';
 import 'package:flutter_dayuwen/models/code_model.dart';
 import 'package:flutter_dayuwen/models/complete_userInfo_model.dart';
 import 'package:flutter_dayuwen/models/interface_config_mode.dart';
@@ -32,9 +30,7 @@ class DaoManager {
       print("response.data:${response.data}");
 
       if (response.data is String) {
-
         String jsonString = response.data;
-
         var resultMap = json.decode(jsonString);
         var loginModel = LoginModel.fromJson(resultMap);
         response.model = loginModel;
@@ -138,6 +134,38 @@ class DaoManager {
       return response;
     } else {
       throw Exception("获取接口配置请求失败");
+    }
+  }
+
+  ///
+  /// @Method: userInfoFetch
+  /// @Parameter:
+  /// @ReturnType:
+  /// @Description: 获取用户信息
+  /// @author: lca
+  /// @Date: 2019-11-28
+  ///
+  static Future <ResponseData> userInfoFetch(Map<String,dynamic> parameters) async {
+    var response = await NetworkManager.post(Const.userInfoInterface, parameters);
+    if (response.result) {
+      Utf8Decoder utf8decoder = Utf8Decoder();//修复中文乱码问题
+      print("response.data:${response.data}");
+
+      if (response.data is String) {
+        String jsonString = response.data;
+        var resultMap = json.decode(jsonString);
+        var loginModel = LoginModel.fromJson(resultMap);
+        response.model = loginModel;
+        AppLoginManager.instance.loginModel = loginModel;
+      } else {
+        var loginModel = LoginModel.fromJson(response.data);
+        response.model = loginModel;
+        AppLoginManager.instance.loginModel = loginModel;
+      }
+
+      return response;
+    } else {
+      throw Exception("登录接口请求失败");
     }
   }
 

@@ -125,7 +125,6 @@ class AppLoginManager {
     String token = sharedPreferences.getString("token");
 
     if (token != null) {
-      
 
     } else {
       _hideLoading(context);
