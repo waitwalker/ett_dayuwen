@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dayuwen/common/network/network_manager.dart';
 import 'package:flutter_dayuwen/common/redux/app_state.dart';
+import 'package:flutter_dayuwen/common/toast/toast.dart';
 import 'package:flutter_dayuwen/dao/dao_manager.dart';
 import 'package:flutter_dayuwen/pages/login/app_login_manager.dart';
 import 'package:flutter_dayuwen/pages/login/picker_data.dart';
@@ -150,20 +151,32 @@ class _CompleteInfoState extends State<CompleteInfoPage> {
                       ResponseData responseData = await DaoManager.completeFetch({"name":_nameController.text,"grade":_gradeController.text,},);
 
                       if (responseData != null && responseData.model != null) {
+                        String message = responseData.model.message;
                         AppLoginManager.instance.loginModel.userType = AppLoginManager.instance.loginModel.userInfo.role;
                         if (responseData.model.code == 200) {
                           AppLoginManager.instance.loginModel.userType == 0 ?
                           Navigator.pushNamedAndRemoveUntil(context, "/student_home", (Route<dynamic> route) => false) :
                           Navigator.pushNamedAndRemoveUntil(context, "/teacher_home", (Route<dynamic> route) => false);
-                        } else if (responseData.model.code == 401) {
-                          /// 验证码已失效
-
+                        } else if (responseData.model.code == 142) {
+                          /// 参数校验失败
+                          print("登录接口:参数校验失败");
+                        } else if (responseData.model.code == 404) {
+                          /// 用户不存在
+                          if (message != null || message.length != 0) {
+                            ETTToast.show(message + ":${responseData.model.code}");
+                          } else {
+                            ETTToast.show("用户不存在:${responseData.model.code}");
+                          }
                         } else if (responseData.model.code == 500) {
-                          /// 验证码已过期请重新获取
-
+                          if (message != null || message.length != 0) {
+                            ETTToast.show(message + ":${responseData.model.code}");
+                          } else {
+                            ETTToast.show("有些问题,请稍后重试!${responseData.model.code}");
+                          }
                         }
+                      } else {
+                        ETTToast.show("有些问题,请稍后重试! -501");
                       }
-
                     } : null,
                   ),
                 ),
