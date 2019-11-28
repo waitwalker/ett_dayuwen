@@ -60,7 +60,7 @@ class AppLoginManager {
   /// @author lca
   /// @date 2019-10-29
   ///
-  _showLoading(BuildContext context) {
+  showLoading(BuildContext context) {
     showDialog(context: context,builder: (context) {
       return Center(
         child: Container(
@@ -80,7 +80,7 @@ class AppLoginManager {
   /// @author lca
   /// @date 2019-11-26
   ///
-  _hideLoading(BuildContext context) {
+  hideLoading(BuildContext context) {
     Navigator.of(context).pop();
   }
 
@@ -108,7 +108,7 @@ class AppLoginManager {
     };
 
     /// 显示加载圈
-    _showLoading(context);
+    showLoading(context);
 
     /// 获取配置
     ResponseData responseData = await DaoManager.interfaceConfigFetch({});
@@ -129,7 +129,7 @@ class AppLoginManager {
     if (token != null) {
       ResponseData responseData = await DaoManager.userInfoFetch({},);
       /// 结果回来后隐藏加载圈
-      _hideLoading(context);
+      hideLoading(context);
       if (responseData != null && responseData.model != null) {
         String message = responseData.model.message;
         AppLoginManager.instance.loginModel.userType = AppLoginManager.instance.loginModel.userInfo.role;
@@ -165,7 +165,7 @@ class AppLoginManager {
       }
 
     } else {
-      _hideLoading(context);
+      hideLoading(context);
       Navigator.pushNamedAndRemoveUntil(context, "/select_identity", (Route<dynamic> route) => false);
     }
   }

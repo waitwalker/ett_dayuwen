@@ -45,6 +45,7 @@ class _AppLoginState extends State<AppLoginPage> {
   /// @date 2019-11-25
   ///
   _startCountDownFunction() {
+    _codeFetch();
     countDownTimer?.cancel();
     countDownTimer = null;
     countDownTimer = Timer.periodic(new Duration(seconds: 1), (t){
@@ -85,11 +86,20 @@ class _AppLoginState extends State<AppLoginPage> {
   _codeFetch() async {
     ResponseData responseData = await DaoManager.codeFetch({"phone":_numberController.text});
     if (responseData != null && responseData.model != null) {
-      String message = responseData.model.message;
+
+      /// 同一接口msg用不同的字段 这种方式太傻货了
+      String message;
+      if (responseData.model.result != null || responseData.model.result.length != 0) {
+        message = responseData.model.result;
+      } else if (responseData.model.message != null || responseData.model.message.length != 0) {
+        message = responseData.model.message;
+      }
       if (responseData.model.code == 142) {
+        _cancelCountDownTimer();
         /// 参数校验失败
         print("登录接口:参数校验失败");
       } else if (responseData.model.code == 500) {
+        _cancelCountDownTimer();
         if (message != null || message.length != 0) {
           ETTToast.show(message + ":${responseData.model.code}");
         } else {
@@ -101,7 +111,6 @@ class _AppLoginState extends State<AppLoginPage> {
         } else {
           ETTToast.show("短信发送成功:${responseData.model.code}");
         }
-        _startCountDownFunction();
       }
 
     } else {
@@ -219,7 +228,7 @@ class _AppLoginState extends State<AppLoginPage> {
 
                     FlatButton(
                       child: Text(_codeButtonTitle,style: TextStyle(fontSize: 14),),
-                      onPressed: _codeButtonEnable ? _codeFetch : null,
+                      onPressed: _codeButtonEnable ? _startCountDownFunction : null,
                     ),
                   ],
                 ),
@@ -240,14 +249,15 @@ class _AppLoginState extends State<AppLoginPage> {
                     color: Colors.amber,
                     disabledColor: Colors.grey,
                     onPressed: _loginEnable ? () async{
+                      AppLoginManager.instance.showLoading(context);
                       _packUpKeyboard();
                       ResponseData responseData = await DaoManager.loginFetch({"phone":_numberController.text,"code":_codeController.text,"role":widget.index},);
+                      AppLoginManager.instance.hideLoading(context);
 
                       if (responseData != null && responseData.model != null) {
                         String message = responseData.model.message;
-
-                        AppLoginManager.instance.loginModel.userType = AppLoginManager.instance.loginModel.userInfo.role;
                         if (responseData.model.code == 200) {
+                          AppLoginManager.instance.loginModel.userType = AppLoginManager.instance.loginModel.userInfo.role;
                           SharedPreferences preference = await SharedPreferences.getInstance();
                           preference.setString("token", AppLoginManager.instance.loginModel.token);
                           if (responseData.model.userInfo.name == null || responseData.model.userInfo.name.length == 0) {
