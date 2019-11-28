@@ -1,15 +1,32 @@
 
 import 'package:flutter/material.dart';
-import 'package:oktoast/oktoast.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
-ettToast(String message){
-  showToast(
-    message,
-    duration: Duration(seconds: 2),
-    position: ToastPosition.center,
-    backgroundColor: Colors.black.withOpacity(0.8),
-    radius: 3.0,
-    textStyle: TextStyle(fontSize: 30.0),
-  );
+///
+/// @name ETTToast
+/// @description 显示toast
+/// @author lca
+/// @date 2019-11-28
+///
+class ETTToast {
+
+  static toast(String message) {
+    Fluttertoast.showToast(
+        msg: message,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIos: 1,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0
+    );
+  }
 }
+
+
+
+
+
+
+
 

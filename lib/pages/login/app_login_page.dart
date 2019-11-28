@@ -1,14 +1,13 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_dayuwen/common/network/network_manager.dart';
 import 'package:flutter_dayuwen/common/redux/app_state.dart';
+import 'package:flutter_dayuwen/common/toast/toast.dart';
 import 'package:flutter_dayuwen/dao/dao_manager.dart';
 import 'package:flutter_dayuwen/pages/login/app_login_manager.dart';
 import 'package:flutter_dayuwen/pages/login/user_agreement_page.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 ///
@@ -226,6 +225,10 @@ class _AppLoginState extends State<AppLoginPage> {
                     onPressed: _loginEnable ? () async{
                       _packUpKeyboard();
 
+                      ETTToast.toast("登录按钮点击了");
+
+                      return;
+
                       ResponseData responseData = await DaoManager.loginFetch({"phone":_numberController.text,"code":_codeController.text,"role":widget.index},);
 
                       if (responseData != null && responseData.model != null) {
@@ -279,17 +282,7 @@ class _AppLoginState extends State<AppLoginPage> {
     });
   }
 
-  toast(String message) {
-    Fluttertoast.showToast(
-        msg: "This is Center Short Toast",
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.CENTER,
-        timeInSecForIos: 1,
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-        fontSize: 16.0
-    );
-  }
+
 
   ///
   /// @name _loginButtonState
