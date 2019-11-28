@@ -125,7 +125,7 @@ class AppLoginManager {
     String token = sharedPreferences.getString("token");
 
     if (token != null) {
-      Map<String,dynamic> header = {"x-token":token};
+      
 
     } else {
       _hideLoading(context);
