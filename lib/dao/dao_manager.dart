@@ -1,12 +1,12 @@
 import 'dart:convert';
-import 'package:dio/dio.dart';
 import 'package:flutter_dayuwen/common/const/const.dart';
 import 'package:flutter_dayuwen/common/network/network_manager.dart';
-import 'package:flutter_dayuwen/common/singleton/singleton_manager.dart';
+import 'package:flutter_dayuwen/models/code_model.dart';
 import 'package:flutter_dayuwen/models/complete_userInfo_model.dart';
 import 'package:flutter_dayuwen/models/interface_config_mode.dart';
 import 'package:flutter_dayuwen/models/login_model.dart';
 import 'package:flutter_dayuwen/pages/login/app_login_manager.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 ///
 /// @name DaoManager
@@ -31,9 +31,7 @@ class DaoManager {
       print("response.data:${response.data}");
 
       if (response.data is String) {
-
         String jsonString = response.data;
-
         var resultMap = json.decode(jsonString);
         var loginModel = LoginModel.fromJson(resultMap);
         response.model = loginModel;
@@ -96,10 +94,10 @@ class DaoManager {
         String jsonString = response.data;
 
         var resultMap = json.decode(jsonString);
-        var model = InterfaceConfigModel.fromJson(resultMap);
+        var model = CodeModel.fromJson(resultMap);
         response.model = model;
       } else {
-        var model = InterfaceConfigModel.fromJson(response.data);
+        var model = CodeModel.fromJson(response.data);
         response.model = model;
       }
       return response;
@@ -137,6 +135,41 @@ class DaoManager {
       return response;
     } else {
       throw Exception("获取接口配置请求失败");
+    }
+  }
+
+  ///
+  /// @Method: userInfoFetch
+  /// @Parameter:
+  /// @ReturnType:
+  /// @Description: 获取用户信息
+  /// @author: lca
+  /// @Date: 2019-11-28
+  ///
+  static Future <ResponseData> userInfoFetch(Map<String,dynamic> parameters) async {
+    var response = await NetworkManager.get(Const.userInfoInterface, parameters);
+    if (response.result) {
+      Utf8Decoder utf8decoder = Utf8Decoder();//修复中文乱码问题
+      print("response.data:${response.data}");
+
+      if (response.data is String) {
+        String jsonString = response.data;
+        var resultMap = json.decode(jsonString);
+        var loginModel = LoginModel.fromJson(resultMap);
+        response.model = loginModel;
+        AppLoginManager.instance.loginModel = loginModel;
+        SharedPreferences preferences = await SharedPreferences.getInstance();
+        AppLoginManager.instance.loginModel.token = preferences.get("token");
+      } else {
+        var loginModel = LoginModel.fromJson(response.data);
+        response.model = loginModel;
+        AppLoginManager.instance.loginModel = loginModel;
+        SharedPreferences preferences = await SharedPreferences.getInstance();
+        AppLoginManager.instance.loginModel.token = preferences.get("token");
+      }
+      return response;
+    } else {
+      throw Exception("登录接口请求失败");
     }
   }
 

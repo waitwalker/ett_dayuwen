@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dayuwen/common/network/network_manager.dart';
 import 'package:flutter_dayuwen/common/redux/app_state.dart';
+import 'package:flutter_dayuwen/common/toast/toast.dart';
 import 'package:flutter_dayuwen/dao/dao_manager.dart';
 import 'package:flutter_dayuwen/pages/login/app_login_manager.dart';
 import 'package:flutter_dayuwen/pages/login/picker_data.dart';
@@ -47,127 +48,135 @@ class _CompleteInfoState extends State<CompleteInfoPage> {
         },
         child: Scaffold(
           key: _scaffoldKey,
+          appBar: AppBar(
+            title: Text("完善信息",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500,color: store.state.theme.appBarTitleColor),),
+            backgroundColor: store.state.theme.appBarBackgroundColor,
+          ),
           body: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Padding(padding: EdgeInsets.only(top: 100)),
-              Container(
-                alignment: Alignment.center,
-                child: Text("完善信息",style: TextStyle(fontSize: 25,fontWeight: FontWeight.w500),),
-              ),
-              Padding(padding: EdgeInsets.only(top: 40)),
+              Expanded(
+                child: ListView(
+                  children: <Widget>[
+                    Padding(padding: EdgeInsets.only(top: 40)),
 
-              Container(
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(50),
-                ),
-                height: 100,
-                width: 100,
-                child: FadeInImage.assetNetwork(
-                  placeholder: 'lib/resources/images/student_avatar.png',
-                  image: 'https://pic1.zhimg.com/v2-7fab628481a26f025188b095b5cfafbc.jpg',
-                  width: 100,
-                  height: 100,
-                  fit: BoxFit.cover,
-                ),
-              ),
+                    Container(
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                      height: 100,
+                      width: 100,
+                      child: FadeInImage.assetNetwork(
+                        placeholder: 'lib/resources/images/student_avatar.png',
+                        image: 'https://pic1.zhimg.com/v2-7fab628481a26f025188b095b5cfafbc.jpg',
+                        width: 100,
+                        height: 100,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
 
-              Padding(padding: EdgeInsets.only(top: 20)),
+                    Padding(padding: EdgeInsets.only(top: 20)),
 
-              Padding(
-                padding: EdgeInsets.only(top: 20,left: 20,right: 20),
-                child: TextField(
-                  controller: _nameController,
-                  focusNode: _nameFocus,
-                  decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.person_outline,color: Colors.grey,size: 24,),
-                    hintText: "填写学生姓名",
-                    hintStyle: TextStyle(color: Colors.grey),
-                    border: InputBorder.none,
-                  ),
-                  onEditingComplete: (){
+                    Padding(
+                      padding: EdgeInsets.only(top: 20,left: 20,right: 20),
+                      child: TextField(
+                        controller: _nameController,
+                        focusNode: _nameFocus,
+                        decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.person_outline,color: Colors.grey,size: 24,),
+                          hintText: "填写学生姓名",
+                          hintStyle: TextStyle(color: Colors.grey),
+                          border: InputBorder.none,
+                        ),
+                        onEditingComplete: (){
 
-                  },
+                        },
 
-                  onChanged:(text){
-                    print("手机号输入:$text");
-                    _nextButtonState();
-                  },
+                        onChanged:(text){
+                          print("手机号输入:$text");
+                          _nextButtonState();
+                        },
 
-                  keyboardType: TextInputType.text,
-                ),
-              ),
+                        keyboardType: TextInputType.text,
+                      ),
+                    ),
 
-              Padding(
-                padding: EdgeInsets.only(left: 20,right: 20),
-                child: Divider(height: 3.0,color: Colors.grey,),
-              ),
+                    Padding(
+                      padding: EdgeInsets.only(left: 20,right: 20),
+                      child: Divider(height: 3.0,color: Colors.grey,),
+                    ),
 
-              Padding(
-                padding: EdgeInsets.only(top: 20,left: 20,right: 20),
-                child: TextField(
-                  controller: _gradeController,
-                  focusNode: _gradeFocus,
-                  decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.format_list_bulleted,color: Colors.grey,size: 24,),
-                    suffixIcon: Icon(Icons.keyboard_arrow_down,color: Colors.grey,size: 30,),
-                    hintText: "填写学生年级",
-                    hintStyle: TextStyle(color: Colors.grey),
-                    border: InputBorder.none,
-                  ),
-                  onTap: (){
-                    print("点击这里");
-                    _packUpKeyboard();
-                    showPicker(context);
-                  },
-                  onEditingComplete: (){
+                    Padding(
+                      padding: EdgeInsets.only(top: 20,left: 20,right: 20),
+                      child: TextField(
+                        controller: _gradeController,
+                        focusNode: _gradeFocus,
+                        decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.format_list_bulleted,color: Colors.grey,size: 24,),
+                          suffixIcon: Icon(Icons.keyboard_arrow_down,color: Colors.grey,size: 30,),
+                          hintText: "填写学生年级",
+                          hintStyle: TextStyle(color: Colors.grey),
+                          border: InputBorder.none,
+                        ),
+                        onTap: (){
+                          print("点击这里");
+                          _packUpKeyboard();
+                          showPicker(context);
+                        },
+                        onEditingComplete: (){
 
-                  },
+                        },
 
-                  onChanged:(text){
+                        onChanged:(text){
 
-                  },
+                        },
 
-                  keyboardType: TextInputType.text,
-                ),
-              ),
+                        keyboardType: TextInputType.text,
+                      ),
+                    ),
 
-              Padding(
-                padding: EdgeInsets.only(left: 20,right: 20),
-                child: Divider(height: 3.0,color: Colors.grey,),
-              ),
+                    Padding(
+                      padding: EdgeInsets.only(left: 20,right: 20),
+                      child: Divider(height: 3.0,color: Colors.grey,),
+                    ),
 
-              Padding(
-                padding: EdgeInsets.only(left: 20,right: 20,top: 40),
-                child: SizedBox(
-                  width: double.infinity,
-                  child: CupertinoButton(
-                    child: Text("下一步"),
-                    color: Colors.amber,
-                    disabledColor: Colors.grey,
-                    onPressed: _nextEnable ? () async{
-                      _packUpKeyboard();
-
-                      ResponseData responseData = await DaoManager.completeFetch({"name":_nameController.text,"grade":_gradeController.text,},);
-
-                      if (responseData != null && responseData.model != null) {
-                        AppLoginManager.instance.loginModel.userType = AppLoginManager.instance.loginModel.userInfo.role;
-                        if (responseData.model.code == 200) {
-                          AppLoginManager.instance.loginModel.userType == 0 ?
-                          Navigator.pushNamedAndRemoveUntil(context, "/student_home", (Route<dynamic> route) => false) :
-                          Navigator.pushNamedAndRemoveUntil(context, "/teacher_home", (Route<dynamic> route) => false);
-                        } else if (responseData.model.code == 401) {
-                          /// 验证码已失效
-
-                        } else if (responseData.model.code == 500) {
-                          /// 验证码已过期请重新获取
-
-                        }
-                      }
-
-                    } : null,
-                  ),
+                    Padding(
+                      padding: EdgeInsets.only(left: 20,right: 20,top: 40),
+                      child: SizedBox(
+                        width: double.infinity,
+                        child: CupertinoButton(
+                          child: Text("下一步"),
+                          color: Colors.amber,
+                          disabledColor: Colors.grey,
+                          onPressed: _nextEnable ? () async{
+                            AppLoginManager.instance.showLoading(context);
+                            _packUpKeyboard();
+                            ResponseData responseData = await DaoManager.completeFetch({"name":_nameController.text,"grade":_gradeController.text,},);
+                            AppLoginManager.instance.hideLoading(context);
+                            if (responseData != null && responseData.model != null) {
+                              AppLoginManager.instance.loginModel.userType = AppLoginManager.instance.loginModel.userInfo.role;
+                              if (responseData.model.code == 200) {
+                                AppLoginManager.instance.loginModel.userType == 1 ?
+                                Navigator.pushNamedAndRemoveUntil(context, "/student_home", (Route<dynamic> route) => false) :
+                                Navigator.pushNamedAndRemoveUntil(context, "/teacher_home", (Route<dynamic> route) => false);
+                              } else if (responseData.model.code == 142) {
+                                /// 参数校验失败
+                                print("登录接口:参数校验失败");
+                              } else if (responseData.model.code == 404) {
+                                /// 用户不存在
+                                ETTToast.show("用户不存在:${responseData.model.code}");
+                              } else if (responseData.model.code == 500) {
+                                ETTToast.show("有些问题,请稍后重试!${responseData.model.code}");
+                              }
+                            } else {
+                              ETTToast.show("有些问题,请稍后重试! -501");
+                            }
+                          } : null,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],

@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_dayuwen/common/color/color.dart';
 import 'package:flutter_dayuwen/common/redux/app_state.dart';
 import 'package:flutter_dayuwen/pages/login/app_login_page.dart';
@@ -24,24 +25,27 @@ class _SelectIdentityState extends State<SelectIdentityPage> {
   @override
   Widget build(BuildContext context) {
     return StoreBuilder<AppState>(builder: (context, store) {
-      return Scaffold(
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            Container(
-              alignment: Alignment.centerLeft,
-              child: const Padding(
-                padding: EdgeInsets.only(left: 30,top: 100),
-                child: Text("欢迎加入龙之门大语文",style: TextStyle(fontSize: 25,color: Colors.black,fontWeight: FontWeight.w500),),
+      return AnnotatedRegion<SystemUiOverlayStyle>(
+        value: SystemUiOverlayStyle.dark,
+        child: Scaffold(
+          body: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Container(
+                alignment: Alignment.centerLeft,
+                child: const Padding(
+                  padding: EdgeInsets.only(left: 30,top: 100),
+                  child: Text("欢迎加入龙之门大语文",style: TextStyle(fontSize: 25,color: Colors.black,fontWeight: FontWeight.w500),),
+                ),
               ),
-            ),
 
-            Container(
-              child: Expanded(
-                child: ListView.builder(itemBuilder: _itemBuilder,itemCount: 2,),),
-            ),
-          ],
-        ),
+              Container(
+                child: Expanded(
+                  child: ListView.builder(itemBuilder: _itemBuilder,itemCount: 2,),),
+              ),
+            ],
+          ),
+        )
       );
     });
   }
@@ -80,7 +84,7 @@ class _SelectIdentityState extends State<SelectIdentityPage> {
     return GestureDetector(
       onTap: (){
         Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context){
-          return AppLoginPage(index: index,);
+          return AppLoginPage(index: index + 1,);
         }));
       },
       child: Padding(

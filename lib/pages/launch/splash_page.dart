@@ -60,7 +60,6 @@ class SplashScreenState extends State<SplashPage>
 
   void navigationPage() async {
     await AppLoginManager.instance.autoLogin(context);
-
   }
 
   @override
@@ -108,16 +107,9 @@ class SplashScreenState extends State<SplashPage>
                     padding: EdgeInsets.only(bottom: 30.0),
                     child: Container(
                       alignment: Alignment.center,
-                      height: 32,
-                      width: 200,
                       child: Text(
-                        "Powed by waitwalker.cn",
-                        style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500,color: Color.fromRGBO(0, 0, 0, 0.6)),
-                      ),
-                      decoration: BoxDecoration(
-                          boxShadow: [BoxShadow(color: Colors.blue,offset: Offset(-2, 2),blurRadius: 2)],
-                          borderRadius: BorderRadius.circular(5),
-                          color: Colors.white
+                        "龙之门大语文",
+                        style: TextStyle(fontSize: 26,fontWeight: FontWeight.w500,color: Color.fromRGBO(0, 0, 0, 0.6)),
                       ),
                     )
                 )
@@ -127,9 +119,9 @@ class SplashScreenState extends State<SplashPage>
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Image.asset(
-                  'lib/resources/images/1024.png',
-                  width: animation.value * 300,
-                  height: animation.value * 300,
+                  'lib/resources/images/logo.png',
+                  width: animation.value * 350,
+                  height: animation.value * 350,
                 ),
               ],
             ),

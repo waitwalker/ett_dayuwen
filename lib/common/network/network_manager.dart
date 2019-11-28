@@ -117,32 +117,30 @@ class NetworkManager {
     headers["client"] = Platform.isIOS ? "iOS" : "android";
 
 
-    if (interface != Const.interfaceConfig) {
-      DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-      PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
 
-      String phoneSysVersion;
-      String appVersion;
-      String platform;
-      SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-      String token = sharedPreferences.getString("token");
-      if (Platform.isIOS) {
-        IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
-        phoneSysVersion = iosInfo.systemVersion;
-        appVersion = packageInfo.version;
-        platform = "2";
-      } else if (Platform.isAndroid) {
-        AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
-        phoneSysVersion = androidInfo.bootloader;
-        appVersion = packageInfo.version;
-        platform = "1";
-      }
-
-      headers["phoneSysVersion"] = phoneSysVersion;
-      headers["appVersion"] = appVersion;
-      headers["platform"] = platform;
-      headers["x-token"] = token;
+    String phoneSysVersion;
+    String appVersion;
+    String platform;
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    String token = sharedPreferences.getString("token");
+    if (Platform.isIOS) {
+      IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+      phoneSysVersion = iosInfo.systemVersion;
+      appVersion = packageInfo.version;
+      platform = "2";
+    } else if (Platform.isAndroid) {
+      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+      phoneSysVersion = androidInfo.bootloader;
+      appVersion = packageInfo.version;
+      platform = "1";
     }
+
+    headers["phoneSysVersion"] = phoneSysVersion;
+    headers["appVersion"] = appVersion;
+    headers["platform"] = platform;
+    headers["x-token"] = token;
     headers["X-Parse-Application-Id"] = "4jXtTizndgVDum5Hjey3";
     headers["X-Parse-REST-API-Key"] = "X-Parse-REST-API-Key";
     headers["X-Parse-JavaScript-Key"] = "F1lbi2cKvzgIswP4BWNJ";

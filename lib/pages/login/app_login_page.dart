@@ -1,9 +1,9 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_dayuwen/common/network/network_manager.dart';
 import 'package:flutter_dayuwen/common/redux/app_state.dart';
+import 'package:flutter_dayuwen/common/toast/toast.dart';
 import 'package:flutter_dayuwen/dao/dao_manager.dart';
 import 'package:flutter_dayuwen/pages/login/app_login_manager.dart';
 import 'package:flutter_dayuwen/pages/login/user_agreement_page.dart';
@@ -33,7 +33,6 @@ class _AppLoginState extends State<AppLoginPage> {
 
   bool _codeButtonEnable = false;
   bool _loginEnable = false;
-
   String _codeButtonTitle = "获取验证码";
   Timer countDownTimer;
 
@@ -47,7 +46,7 @@ class _AppLoginState extends State<AppLoginPage> {
   ///
   _startCountDownFunction() {
     _codeFetch();
-    countDownTimer?.cancel();//如果已存在先取消置空
+    countDownTimer?.cancel();
     countDownTimer = null;
     countDownTimer = Timer.periodic(new Duration(seconds: 1), (t){
       setState(() {
@@ -76,17 +75,55 @@ class _AppLoginState extends State<AppLoginPage> {
     countDownTimer = null;
   }
 
+  ///
+  /// @name _codeFetch
+  /// @description 获取验证码
+  /// @parameters
+  /// @return
+  /// @author lca
+  /// @date 2019-11-28
+  ///
   _codeFetch() async {
+    AppLoginManager.instance.showLoading(context);
     ResponseData responseData = await DaoManager.codeFetch({"phone":_numberController.text});
+    AppLoginManager.instance.hideLoading(context);
     if (responseData != null && responseData.model != null) {
-      if (responseData.model.code == 403) {
-
+      /// 同一接口msg用不同的字段 这种方式太傻货了
+      String message;
+      if (responseData.model.result != null && responseData.model.result.length > 0) {
+        message = responseData.model.result;
+      } else if (responseData.model.message != null && responseData.model.message.length > 0) {
+        message = responseData.model.message;
+      }
+      if (responseData.model.code == 142) {
+        _cancelCountDownTimer();
+        /// 参数校验失败
+        print("登录接口:参数校验失败");
       } else if (responseData.model.code == 500) {
-
+        _cancelCountDownTimer();
+        if (message != null || message.length != 0) {
+          ETTToast.show(message + ":${responseData.model.code}");
+        } else {
+          ETTToast.show("有些问题,请稍后重试!${responseData.model.code}");
+        }
+      }  else if (responseData.model.code == 403) {
+        /// 验证码一分钟内只能获取一次
+        _cancelCountDownTimer();
+        if (message != null || message.length != 0) {
+          ETTToast.show(message + ":${responseData.model.code}");
+        } else {
+          ETTToast.show("验证码一分钟内只能获取一次: ${responseData.model.code}");
+        }
       } else if (responseData.model.code == 200) {
-
+        if (message != null || message.length != 0) {
+          ETTToast.show(message + ":${responseData.model.code}");
+        } else {
+          ETTToast.show("短信发送成功:${responseData.model.code}");
+        }
       }
 
+    } else {
+      ETTToast.show("有些问题,请稍后重试! -501");
     }
   }
 
@@ -111,10 +148,11 @@ class _AppLoginState extends State<AppLoginPage> {
       return GestureDetector(
         child: Scaffold(
           appBar: AppBar(
-            backgroundColor: Colors.white,
+            backgroundColor: store.state.theme.appBarBackgroundColor,
             elevation: 0.0,
+            title: Text(widget.index == 1 ? "学生登录" : "老师登录",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500,color: store.state.theme.appBarTitleColor),),
             leading: GestureDetector(
-              child: Icon(Icons.arrow_back_ios),
+              child: Icon(Icons.arrow_back_ios,color: Colors.white,),
               onTap: (){
                 Navigator.of(context).pop();
               },
@@ -122,20 +160,7 @@ class _AppLoginState extends State<AppLoginPage> {
           ),
           body: Column(
             children: <Widget>[
-              Padding(padding: EdgeInsets.only(top: 40)),
-              Padding(
-                padding: EdgeInsets.only(left: 30),
-                child: Container(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    widget.index == 0 ? "学生登录" : "老师登录",
-                    style: TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ),
-              ),
+              Padding(padding: EdgeInsets.only(top: 30)),
               Padding(
                 padding: EdgeInsets.only(top: 40,left: 20,right: 20),
                 child: TextField(
@@ -170,7 +195,6 @@ class _AppLoginState extends State<AppLoginPage> {
                 padding: EdgeInsets.only(left: 20,right: 20),
                 child: Divider(height: 3.0,color: Colors.grey,),
               ),
-
               Padding(padding: EdgeInsets.only(top: 20)),
               Padding(
                 padding: EdgeInsets.only(left: 20,right: 20),
@@ -206,14 +230,13 @@ class _AppLoginState extends State<AppLoginPage> {
                   ],
                 ),
               ),
-
               Padding(
                 padding: EdgeInsets.only(left: 20,right: 20),
                 child: Divider(height: 3.0,color: Colors.grey,),
               ),
 
               Padding(padding: EdgeInsets.only(top: 40)),
-
+              /// 登录按钮
               Padding(
                 padding: EdgeInsets.only(left: 20,right: 20),
                 child: SizedBox(
@@ -223,36 +246,55 @@ class _AppLoginState extends State<AppLoginPage> {
                     color: Colors.amber,
                     disabledColor: Colors.grey,
                     onPressed: _loginEnable ? () async{
+                      AppLoginManager.instance.showLoading(context);
                       _packUpKeyboard();
-
                       ResponseData responseData = await DaoManager.loginFetch({"phone":_numberController.text,"code":_codeController.text,"role":widget.index},);
+                      AppLoginManager.instance.hideLoading(context);
 
                       if (responseData != null && responseData.model != null) {
-                        AppLoginManager.instance.loginModel.userType = AppLoginManager.instance.loginModel.userInfo.role;
+                        String message = responseData.model.message;
                         if (responseData.model.code == 200) {
+                          AppLoginManager.instance.loginModel.userType = AppLoginManager.instance.loginModel.userInfo.role;
                           SharedPreferences preference = await SharedPreferences.getInstance();
                           preference.setString("token", AppLoginManager.instance.loginModel.token);
                           if (responseData.model.userInfo.name == null || responseData.model.userInfo.name.length == 0) {
                             Navigator.pushNamedAndRemoveUntil(context, "/complete_info", (Route<dynamic> route) => false);
                           } else {
-                            widget.index == 0 ?
+                            widget.index == 1 ?
                             Navigator.pushNamedAndRemoveUntil(context, "/student_home", (Route<dynamic> route) => false) :
                             Navigator.pushNamedAndRemoveUntil(context, "/teacher_home", (Route<dynamic> route) => false);
                           }
+                        } else if (responseData.model.code == 142) {
+                          /// 参数校验失败
+                          print("登录接口:参数校验失败");
                         } else if (responseData.model.code == 402) {
                           /// 验证码已失效
-
+                          if (message != null || message.length != 0) {
+                            ETTToast.show(message + ":${responseData.model.code}");
+                          } else {
+                            ETTToast.show("此验证码已失效:${responseData.model.code}");
+                          }
+                        } else if (responseData.model.code == 403) {
+                          /// 验证码校验失败
+                          if (message != null || message.length != 0) {
+                            ETTToast.show(message + ":${responseData.model.code}");
+                          } else {
+                            ETTToast.show("验证码校验失败:${responseData.model.code}");
+                          }
                         } else if (responseData.model.code == 500) {
-                          /// 验证码已过期请重新获取
-
+                          if (message != null || message.length != 0) {
+                            ETTToast.show(message + ":${responseData.model.code}");
+                          } else {
+                            ETTToast.show("有些问题,请稍后重试!${responseData.model.code}");
+                          }
                         }
+                      } else {
+                        ETTToast.show("有些问题,请稍后重试! -501");
                       }
-
                     } : null,
                   ),
                 ),
               ),
-
               Padding(padding: EdgeInsets.only(top: 20)),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -277,6 +319,7 @@ class _AppLoginState extends State<AppLoginPage> {
       );
     });
   }
+
 
   ///
   /// @name _loginButtonState
