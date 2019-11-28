@@ -270,6 +270,15 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_webview_plugin:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: master
+      resolved-ref: "8be8277e13d554901c6aaa696ea437f37c3a9d5f"
+      url: "https://github.com/waitwalker/flutter_webview_plugin.git"
+    source: git
+    version: "0.3.9+1"
   fluttertoast:
     dependency: "direct main"
     description:
