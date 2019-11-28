@@ -148,10 +148,11 @@ class _AppLoginState extends State<AppLoginPage> {
       return GestureDetector(
         child: Scaffold(
           appBar: AppBar(
-            backgroundColor: Colors.white,
+            backgroundColor: store.state.theme.appBarBackgroundColor,
             elevation: 0.0,
+            title: Text(widget.index == 1 ? "学生登录" : "老师登录",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500,color: store.state.theme.appBarTitleColor),),
             leading: GestureDetector(
-              child: Icon(Icons.arrow_back_ios),
+              child: Icon(Icons.arrow_back_ios,color: Colors.white,),
               onTap: (){
                 Navigator.of(context).pop();
               },
@@ -159,20 +160,7 @@ class _AppLoginState extends State<AppLoginPage> {
           ),
           body: Column(
             children: <Widget>[
-              Padding(padding: EdgeInsets.only(top: 40)),
-              Padding(
-                padding: EdgeInsets.only(left: 30),
-                child: Container(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    widget.index == 0 ? "学生登录" : "老师登录",
-                    style: TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ),
-              ),
+              Padding(padding: EdgeInsets.only(top: 30)),
               Padding(
                 padding: EdgeInsets.only(top: 40,left: 20,right: 20),
                 child: TextField(

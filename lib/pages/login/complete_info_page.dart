@@ -49,7 +49,8 @@ class _CompleteInfoState extends State<CompleteInfoPage> {
         child: Scaffold(
           key: _scaffoldKey,
           appBar: AppBar(
-            title: Text("完善信息",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500),),
+            title: Text("完善信息",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500,color: store.state.theme.appBarTitleColor),),
+            backgroundColor: store.state.theme.appBarBackgroundColor,
           ),
           body: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
