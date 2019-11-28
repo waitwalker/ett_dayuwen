@@ -240,6 +240,9 @@ class _AppLoginState extends State<AppLoginPage> {
                             Navigator.pushNamedAndRemoveUntil(context, "/student_home", (Route<dynamic> route) => false) :
                             Navigator.pushNamedAndRemoveUntil(context, "/teacher_home", (Route<dynamic> route) => false);
                           }
+                        } else if (responseData.model.code == 142) {
+                          /// 参数校验失败
+                          print("登录接口:参数校验失败");
                         } else if (responseData.model.code == 402) {
                           /// 验证码已失效
                           if (message != null || message.length != 0) {
