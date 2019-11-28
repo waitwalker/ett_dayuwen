@@ -7,15 +7,15 @@
 ///
 class CodeModel {
   int code;
-  String result;
-  String message;
+  String result = "";
+  String message = "";
 
   CodeModel({this.code, this.result,this.message});
 
   CodeModel.fromJson(Map<String, dynamic> json) {
     code = json['code'];
-    result = json['result'];
-    message = json['message'];
+    result = json['result'] == null ? "" : json['result'];
+    message = json['message'] == null ? "" : json['message'];
   }
 
   Map<String, dynamic> toJson() {

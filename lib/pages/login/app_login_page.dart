@@ -89,9 +89,9 @@ class _AppLoginState extends State<AppLoginPage> {
 
       /// 同一接口msg用不同的字段 这种方式太傻货了
       String message;
-      if (responseData.model.result != null || responseData.model.result.length != 0) {
+      if (responseData.model.result != null && responseData.model.result.length > 0) {
         message = responseData.model.result;
-      } else if (responseData.model.message != null || responseData.model.message.length != 0) {
+      } else if (responseData.model.message != null && responseData.model.message.length > 0) {
         message = responseData.model.message;
       }
       if (responseData.model.code == 142) {
