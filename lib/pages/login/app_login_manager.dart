@@ -107,6 +107,7 @@ class AppLoginManager {
       },
     };
 
+    /// 显示加载圈
     _showLoading(context);
 
     /// 获取配置
@@ -119,7 +120,6 @@ class AppLoginManager {
       }
     } else {
       AppLoginManager.instance.configModel = Result.fromJson(map);
-
     }
 
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
@@ -166,19 +166,9 @@ class AppLoginManager {
 
     } else {
       _hideLoading(context);
-
       Navigator.pushNamedAndRemoveUntil(context, "/select_identity", (Route<dynamic> route) => false);
     }
   }
-
-
-  login(BuildContext context, Map parameter) async {
-    ResponseData responseData = await DaoManager.loginFetch(parameter);
-    if (responseData != null && responseData.model != null) {
-
-    }
-  }
-
 
 
 
