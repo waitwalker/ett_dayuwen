@@ -106,6 +106,14 @@ class _AppLoginState extends State<AppLoginPage> {
         } else {
           ETTToast.show("有些问题,请稍后重试!${responseData.model.code}");
         }
+      }  else if (responseData.model.code == 403) {
+        /// 验证码一分钟内只能获取一次
+        _cancelCountDownTimer();
+        if (message != null || message.length != 0) {
+          ETTToast.show(message + ":${responseData.model.code}");
+        } else {
+          ETTToast.show("验证码一分钟内只能获取一次: ${responseData.model.code}");
+        }
       } else if (responseData.model.code == 200) {
         if (message != null || message.length != 0) {
           ETTToast.show(message + ":${responseData.model.code}");
