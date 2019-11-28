@@ -112,6 +112,7 @@ class AppLoginManager {
 
     /// 获取配置
     ResponseData responseData = await DaoManager.interfaceConfigFetch({});
+    hideLoading(context);
     if (responseData != null && responseData.model != null) {
       if (responseData.model.code == 200) {
         AppLoginManager.instance.configModel = responseData.model.result;
@@ -127,6 +128,7 @@ class AppLoginManager {
 
     /// 根据token有无判断是否可以自定登录
     if (token != null) {
+      showLoading(context);
       ResponseData responseData = await DaoManager.userInfoFetch({},);
       /// 结果回来后隐藏加载圈
       hideLoading(context);
@@ -165,7 +167,6 @@ class AppLoginManager {
       }
 
     } else {
-      hideLoading(context);
       Navigator.pushNamedAndRemoveUntil(context, "/select_identity", (Route<dynamic> route) => false);
     }
   }

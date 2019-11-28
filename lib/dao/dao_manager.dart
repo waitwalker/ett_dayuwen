@@ -6,6 +6,7 @@ import 'package:flutter_dayuwen/models/complete_userInfo_model.dart';
 import 'package:flutter_dayuwen/models/interface_config_mode.dart';
 import 'package:flutter_dayuwen/models/login_model.dart';
 import 'package:flutter_dayuwen/pages/login/app_login_manager.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 ///
 /// @name DaoManager
@@ -146,7 +147,7 @@ class DaoManager {
   /// @Date: 2019-11-28
   ///
   static Future <ResponseData> userInfoFetch(Map<String,dynamic> parameters) async {
-    var response = await NetworkManager.post(Const.userInfoInterface, parameters);
+    var response = await NetworkManager.get(Const.userInfoInterface, parameters);
     if (response.result) {
       Utf8Decoder utf8decoder = Utf8Decoder();//修复中文乱码问题
       print("response.data:${response.data}");
@@ -157,12 +158,15 @@ class DaoManager {
         var loginModel = LoginModel.fromJson(resultMap);
         response.model = loginModel;
         AppLoginManager.instance.loginModel = loginModel;
+        SharedPreferences preferences = await SharedPreferences.getInstance();
+        AppLoginManager.instance.loginModel.token = preferences.get("token");
       } else {
         var loginModel = LoginModel.fromJson(response.data);
         response.model = loginModel;
         AppLoginManager.instance.loginModel = loginModel;
+        SharedPreferences preferences = await SharedPreferences.getInstance();
+        AppLoginManager.instance.loginModel.token = preferences.get("token");
       }
-
       return response;
     } else {
       throw Exception("登录接口请求失败");

@@ -18,15 +18,6 @@ class _StudentHomeState extends State<StudentHomePage> {
   Widget build(BuildContext context) {
     return StoreBuilder<AppState>(builder: (context, store) {
       return Scaffold(
-        appBar: AppBar(
-          title: Text("用户协议"),
-          leading: GestureDetector(
-            child: Icon(Icons.arrow_back_ios),
-            onTap: (){
-              Navigator.of(context).pop();
-            },
-          ),
-        ),
         body: WebView(
           initialUrl: "https://m.yuwenclub.com/terms.html",
           javascriptMode: JavascriptMode.unrestricted,

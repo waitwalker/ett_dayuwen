@@ -60,7 +60,6 @@ class SplashScreenState extends State<SplashPage>
 
   void navigationPage() async {
     await AppLoginManager.instance.autoLogin(context);
-
   }
 
   @override
