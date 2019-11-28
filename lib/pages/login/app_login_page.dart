@@ -33,7 +33,6 @@ class _AppLoginState extends State<AppLoginPage> {
 
   bool _codeButtonEnable = false;
   bool _loginEnable = false;
-
   String _codeButtonTitle = "获取验证码";
   Timer countDownTimer;
 
@@ -46,7 +45,7 @@ class _AppLoginState extends State<AppLoginPage> {
   /// @date 2019-11-25
   ///
   _startCountDownFunction() {
-    countDownTimer?.cancel();//如果已存在先取消置空
+    countDownTimer?.cancel();
     countDownTimer = null;
     countDownTimer = Timer.periodic(new Duration(seconds: 1), (t){
       setState(() {
@@ -190,7 +189,6 @@ class _AppLoginState extends State<AppLoginPage> {
                 padding: EdgeInsets.only(left: 20,right: 20),
                 child: Divider(height: 3.0,color: Colors.grey,),
               ),
-
               Padding(padding: EdgeInsets.only(top: 20)),
               Padding(
                 padding: EdgeInsets.only(left: 20,right: 20),
@@ -226,14 +224,12 @@ class _AppLoginState extends State<AppLoginPage> {
                   ],
                 ),
               ),
-
               Padding(
                 padding: EdgeInsets.only(left: 20,right: 20),
                 child: Divider(height: 3.0,color: Colors.grey,),
               ),
 
               Padding(padding: EdgeInsets.only(top: 40)),
-
               /// 登录按钮
               Padding(
                 padding: EdgeInsets.only(left: 20,right: 20),
@@ -292,7 +288,6 @@ class _AppLoginState extends State<AppLoginPage> {
                   ),
                 ),
               ),
-
               Padding(padding: EdgeInsets.only(top: 20)),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -317,7 +312,6 @@ class _AppLoginState extends State<AppLoginPage> {
       );
     });
   }
-
 
 
   ///
