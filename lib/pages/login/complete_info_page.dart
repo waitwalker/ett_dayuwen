@@ -49,7 +49,7 @@ class _CompleteInfoState extends State<CompleteInfoPage> {
         child: Scaffold(
           key: _scaffoldKey,
           appBar: AppBar(
-            title: Text("完善信息",style: TextStyle(fontSize: 25,fontWeight: FontWeight.w500),),
+            title: Text("完善信息",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500),),
           ),
           body: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -156,7 +156,7 @@ class _CompleteInfoState extends State<CompleteInfoPage> {
                             if (responseData != null && responseData.model != null) {
                               AppLoginManager.instance.loginModel.userType = AppLoginManager.instance.loginModel.userInfo.role;
                               if (responseData.model.code == 200) {
-                                AppLoginManager.instance.loginModel.userType == 0 ?
+                                AppLoginManager.instance.loginModel.userType == 1 ?
                                 Navigator.pushNamedAndRemoveUntil(context, "/student_home", (Route<dynamic> route) => false) :
                                 Navigator.pushNamedAndRemoveUntil(context, "/teacher_home", (Route<dynamic> route) => false);
                               } else if (responseData.model.code == 142) {

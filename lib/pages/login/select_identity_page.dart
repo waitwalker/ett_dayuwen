@@ -80,7 +80,7 @@ class _SelectIdentityState extends State<SelectIdentityPage> {
     return GestureDetector(
       onTap: (){
         Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context){
-          return AppLoginPage(index: index,);
+          return AppLoginPage(index: index + 1,);
         }));
       },
       child: Padding(

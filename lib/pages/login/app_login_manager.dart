@@ -139,7 +139,7 @@ class AppLoginManager {
           if (responseData.model.userInfo.name == null || responseData.model.userInfo.name.length == 0) {
             Navigator.pushNamedAndRemoveUntil(context, "/complete_info", (Route<dynamic> route) => false);
           } else {
-            AppLoginManager.instance.loginModel.userType == 0 ?
+            AppLoginManager.instance.loginModel.userType == 1 ?
             Navigator.pushNamedAndRemoveUntil(context, "/student_home", (Route<dynamic> route) => false) :
             Navigator.pushNamedAndRemoveUntil(context, "/teacher_home", (Route<dynamic> route) => false);
           }

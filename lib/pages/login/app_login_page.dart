@@ -263,7 +263,7 @@ class _AppLoginState extends State<AppLoginPage> {
                           if (responseData.model.userInfo.name == null || responseData.model.userInfo.name.length == 0) {
                             Navigator.pushNamedAndRemoveUntil(context, "/complete_info", (Route<dynamic> route) => false);
                           } else {
-                            widget.index == 0 ?
+                            widget.index == 1 ?
                             Navigator.pushNamedAndRemoveUntil(context, "/student_home", (Route<dynamic> route) => false) :
                             Navigator.pushNamedAndRemoveUntil(context, "/teacher_home", (Route<dynamic> route) => false);
                           }
