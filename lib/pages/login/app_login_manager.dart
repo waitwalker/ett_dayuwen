@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dayuwen/common/database/database_manager.dart';
 import 'package:flutter_dayuwen/common/network/network_manager.dart';
+import 'package:flutter_dayuwen/common/toast/toast.dart';
 import 'package:flutter_dayuwen/dao/dao_manager.dart';
 import 'package:flutter_dayuwen/models/interface_config_mode.dart';
 import 'package:flutter_dayuwen/models/login_model.dart';
@@ -124,7 +125,44 @@ class AppLoginManager {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     String token = sharedPreferences.getString("token");
 
+    /// 根据token有无判断是否可以自定登录
     if (token != null) {
+      ResponseData responseData = await DaoManager.userInfoFetch({},);
+      /// 结果回来后隐藏加载圈
+      _hideLoading(context);
+      if (responseData != null && responseData.model != null) {
+        String message = responseData.model.message;
+        AppLoginManager.instance.loginModel.userType = AppLoginManager.instance.loginModel.userInfo.role;
+        if (responseData.model.code == 200) {
+          SharedPreferences preference = await SharedPreferences.getInstance();
+          preference.setString("token", AppLoginManager.instance.loginModel.token);
+          if (responseData.model.userInfo.name == null || responseData.model.userInfo.name.length == 0) {
+            Navigator.pushNamedAndRemoveUntil(context, "/complete_info", (Route<dynamic> route) => false);
+          } else {
+            AppLoginManager.instance.loginModel.userType == 0 ?
+            Navigator.pushNamedAndRemoveUntil(context, "/student_home", (Route<dynamic> route) => false) :
+            Navigator.pushNamedAndRemoveUntil(context, "/teacher_home", (Route<dynamic> route) => false);
+          }
+        } else if (responseData.model.code == 142) {
+          /// 参数校验失败
+          print("登录接口:参数校验失败");
+        }  else if (responseData.model.code == 404) {
+          /// 用户不存在
+          if (message != null || message.length != 0) {
+            ETTToast.show(message + ":${responseData.model.code}");
+          } else {
+            ETTToast.show("用户不存在:${responseData.model.code}");
+          }
+        } else if (responseData.model.code == 500) {
+          if (message != null || message.length != 0) {
+            ETTToast.show(message + ":${responseData.model.code}");
+          } else {
+            ETTToast.show("有些问题,请稍后重试!${responseData.model.code}");
+          }
+        }
+      } else {
+        ETTToast.show("有些问题,请稍后重试! -501");
+      }
 
     } else {
       _hideLoading(context);
