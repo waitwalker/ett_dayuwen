@@ -46,7 +46,6 @@ class _AppLoginState extends State<AppLoginPage> {
   /// @date 2019-11-25
   ///
   _startCountDownFunction() {
-    _codeFetch();
     countDownTimer?.cancel();//如果已存在先取消置空
     countDownTimer = null;
     countDownTimer = Timer.periodic(new Duration(seconds: 1), (t){
@@ -76,15 +75,24 @@ class _AppLoginState extends State<AppLoginPage> {
     countDownTimer = null;
   }
 
+  ///
+  /// @name _codeFetch
+  /// @description 获取验证码
+  /// @parameters
+  /// @return
+  /// @author lca
+  /// @date 2019-11-28
+  ///
   _codeFetch() async {
     ResponseData responseData = await DaoManager.codeFetch({"phone":_numberController.text});
     if (responseData != null && responseData.model != null) {
+      String message = responseData.model.message;
       if (responseData.model.code == 403) {
 
       } else if (responseData.model.code == 500) {
 
       } else if (responseData.model.code == 200) {
-
+        _startCountDownFunction();
       }
 
     }
@@ -201,7 +209,7 @@ class _AppLoginState extends State<AppLoginPage> {
 
                     FlatButton(
                       child: Text(_codeButtonTitle,style: TextStyle(fontSize: 14),),
-                      onPressed: _codeButtonEnable ? _startCountDownFunction : null,
+                      onPressed: _codeButtonEnable ? _codeFetch : null,
                     ),
                   ],
                 ),
@@ -214,6 +222,7 @@ class _AppLoginState extends State<AppLoginPage> {
 
               Padding(padding: EdgeInsets.only(top: 40)),
 
+              /// 登录按钮
               Padding(
                 padding: EdgeInsets.only(left: 20,right: 20),
                 child: SizedBox(
