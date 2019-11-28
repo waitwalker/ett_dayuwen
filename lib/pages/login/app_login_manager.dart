@@ -64,8 +64,8 @@ class AppLoginManager {
     showDialog(context: context,builder: (context) {
       return Center(
         child: Container(
-          width: 80,
-          height: 80,
+          width: 50,
+          height: 50,
           child: CircularProgressIndicator(),
         ),
       );

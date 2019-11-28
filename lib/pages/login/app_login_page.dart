@@ -84,9 +84,10 @@ class _AppLoginState extends State<AppLoginPage> {
   /// @date 2019-11-28
   ///
   _codeFetch() async {
+    AppLoginManager.instance.showLoading(context);
     ResponseData responseData = await DaoManager.codeFetch({"phone":_numberController.text});
+    AppLoginManager.instance.hideLoading(context);
     if (responseData != null && responseData.model != null) {
-
       /// 同一接口msg用不同的字段 这种方式太傻货了
       String message;
       if (responseData.model.result != null && responseData.model.result.length > 0) {
