@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_dayuwen/common/const/const.dart';
 import 'package:flutter_dayuwen/common/network/network_manager.dart';
 import 'package:flutter_dayuwen/common/singleton/singleton_manager.dart';
+import 'package:flutter_dayuwen/models/code_model.dart';
 import 'package:flutter_dayuwen/models/complete_userInfo_model.dart';
 import 'package:flutter_dayuwen/models/interface_config_mode.dart';
 import 'package:flutter_dayuwen/models/login_model.dart';
@@ -96,10 +97,10 @@ class DaoManager {
         String jsonString = response.data;
 
         var resultMap = json.decode(jsonString);
-        var model = InterfaceConfigModel.fromJson(resultMap);
+        var model = CodeModel.fromJson(resultMap);
         response.model = model;
       } else {
-        var model = InterfaceConfigModel.fromJson(response.data);
+        var model = CodeModel.fromJson(response.data);
         response.model = model;
       }
       return response;

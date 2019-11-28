@@ -87,14 +87,26 @@ class _AppLoginState extends State<AppLoginPage> {
     ResponseData responseData = await DaoManager.codeFetch({"phone":_numberController.text});
     if (responseData != null && responseData.model != null) {
       String message = responseData.model.message;
-      if (responseData.model.code == 403) {
-
+      if (responseData.model.code == 142) {
+        /// 参数校验失败
+        print("登录接口:参数校验失败");
       } else if (responseData.model.code == 500) {
-
+        if (message != null || message.length != 0) {
+          ETTToast.show(message + ":${responseData.model.code}");
+        } else {
+          ETTToast.show("有些问题,请稍后重试!${responseData.model.code}");
+        }
       } else if (responseData.model.code == 200) {
+        if (message != null || message.length != 0) {
+          ETTToast.show(message + ":${responseData.model.code}");
+        } else {
+          ETTToast.show("短信发送成功:${responseData.model.code}");
+        }
         _startCountDownFunction();
       }
 
+    } else {
+      ETTToast.show("有些问题,请稍后重试! -501");
     }
   }
 
@@ -255,26 +267,27 @@ class _AppLoginState extends State<AppLoginPage> {
                         } else if (responseData.model.code == 402) {
                           /// 验证码已失效
                           if (message != null || message.length != 0) {
-                            ETTToast.show(message + ":${responseData.code}");
+                            ETTToast.show(message + ":${responseData.model.code}");
                           } else {
-                            ETTToast.show("此验证码已失效:${responseData.code}");
+                            ETTToast.show("此验证码已失效:${responseData.model.code}");
                           }
                         } else if (responseData.model.code == 403) {
                           /// 验证码校验失败
                           if (message != null || message.length != 0) {
-                            ETTToast.show(message + ":${responseData.code}");
+                            ETTToast.show(message + ":${responseData.model.code}");
                           } else {
-                            ETTToast.show("验证码校验失败:${responseData.code}");
+                            ETTToast.show("验证码校验失败:${responseData.model.code}");
                           }
                         } else if (responseData.model.code == 500) {
                           if (message != null || message.length != 0) {
-                            ETTToast.show(message + ":${responseData.code}");
+                            ETTToast.show(message + ":${responseData.model.code}");
                           } else {
-                            ETTToast.show("有些问题,请稍后重试!${responseData.code}");
+                            ETTToast.show("有些问题,请稍后重试!${responseData.model.code}");
                           }
                         }
+                      } else {
+                        ETTToast.show("有些问题,请稍后重试! -501");
                       }
-
                     } : null,
                   ),
                 ),
