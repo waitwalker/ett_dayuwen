@@ -55,7 +55,43 @@ class _StudentHomeState extends State<StudentHomePage> {
       ],
       userAgent: "|appVersion=1.0.2",
       url: AppLoginManager.instance.configModel.h5Url.studentUrl,
+      /// js调用flutter
+      javascriptChannels: <JavascriptChannel>[
+        _baseJavascriptChannel(context),
+        _xianshengJavascriptChannel(context),
+        _avJavascriptChannel(context),
+      ].toSet(),
 
+    );
+  }
+
+  /// base channel
+  JavascriptChannel _baseJavascriptChannel(BuildContext context) {
+    return JavascriptChannel(
+      name: 'base',
+      onMessageReceived: (JavascriptMessage message) {
+
+      },
+    );
+  }
+
+  /// xiansheng channel
+  JavascriptChannel _xianshengJavascriptChannel(BuildContext context) {
+    return JavascriptChannel(
+      name: 'xiansheng',
+      onMessageReceived: (JavascriptMessage message) {
+
+      },
+    );
+  }
+
+  /// AV channel
+  JavascriptChannel _avJavascriptChannel(BuildContext context) {
+    return JavascriptChannel(
+      name: 'AV',
+      onMessageReceived: (JavascriptMessage message) {
+
+      },
     );
   }
 }
