@@ -14,9 +14,39 @@ class StudentHomePage extends StatefulWidget {
 }
 
 class _StudentHomeState extends State<StudentHomePage> {
+
+
+  FlutterWebviewPlugin webviewPlugin = FlutterWebviewPlugin();
+
+  @override
+  void initState() {
+
+    /// 监听url地址变化
+    webviewPlugin.onUrlChanged.listen((String url){
+      print("当前Webview地址:$url");
+    });
+
+    /// 监听页面状态改变
+    webviewPlugin.onStateChanged.listen((WebViewStateChanged stateChanged){
+      print("页面状态改变:${stateChanged.type}");
+    });
+
+
+    /// 监听Webview滚动
+    webviewPlugin.onScrollYChanged.listen((double offsetY) {
+      print("Y滚动距离:$offsetY");
+    });
+
+    webviewPlugin.onScrollXChanged.listen((double offsetX) {
+      print("X滚动距离:$offsetX");
+    });
+
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-
     return WebviewScaffold(
       cookies: [
         {'k': 'token', 'v': AppLoginManager.instance.loginModel.token},
@@ -25,58 +55,7 @@ class _StudentHomeState extends State<StudentHomePage> {
       ],
       userAgent: "|appVersion=1.0.2",
       url: AppLoginManager.instance.configModel.h5Url.studentUrl,
+
     );
   }
 }
-
-//class _StudentHomeState extends State<StudentHomePage> {
-//  WebViewController webViewController;
-//
-//  @override
-//  Widget build(BuildContext context) {
-//    return StoreBuilder<AppState>(builder: (context, store) {
-//      return Scaffold(
-//        body: WebView(
-//          initialUrl: AppLoginManager.instance.configModel.h5Url.studentUrl,
-//          javascriptMode: JavascriptMode.unrestricted,
-//          onWebViewCreated: (controller) {
-//            webViewController = controller;
-//            webViewController.evaluateJavascript(_getCookie());
-//          },
-//          onPageFinished: (url){
-//            webViewController.evaluateJavascript(_getCookie());
-//            print("加载完成:$url");
-//          },
-//          navigationDelegate: (NavigationRequest request) {
-//            //对于需要拦截的操作 做判断
-//            if(request.url.startsWith("myapp://")) {
-//              print("即将打开 ${request.url}");
-//              //做拦截处理
-//              //pushto....
-//              return NavigationDecision.prevent;
-//            }
-//
-//            //不需要拦截的操作
-//            return NavigationDecision.navigate;
-//          },
-//          javascriptChannels: <JavascriptChannel>[
-//            /// js 调用Flutter 只有postMessage或者拦截url
-//            JavascriptChannel(
-//                name: "message",
-//                onMessageReceived: (JavascriptMessage message) {
-//                  print("参数： ${message.message}");
-//                }
-//            ),
-//          ].toSet(),
-//
-//        ),
-//      );
-//    });
-//  }
-//
-//  String _getCookie() {
-//    String cookie = "document.cookie= '${AppLoginManager.instance.loginModel.token}';document.cookie= 'identity=${AppLoginManager.instance.loginModel.userType}';document.cookie= 'platform=2'";
-//    print("设置的cookie:$cookie");
-//    return cookie;
-//  }
-//}
