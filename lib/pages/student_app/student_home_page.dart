@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_dayuwen/common/redux/app_state.dart';
 import 'package:flutter_dayuwen/pages/login/app_login_manager.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -47,21 +48,24 @@ class _StudentHomeState extends State<StudentHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return WebviewScaffold(
-      cookies: [
-        {'k': 'token', 'v': AppLoginManager.instance.loginModel.token},
-        {'k': 'identity', 'v': "${AppLoginManager.instance.loginModel.userType}"},
-        {'k': 'platform', 'v': "2"},
-      ],
-      userAgent: "|appVersion=1.0.2",
-      url: AppLoginManager.instance.configModel.h5Url.studentUrl,
-      /// js调用flutter
-      javascriptChannels: <JavascriptChannel>[
-        _baseJavascriptChannel(context),
-        _xianshengJavascriptChannel(context),
-        _avJavascriptChannel(context),
-      ].toSet(),
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+        value: SystemUiOverlayStyle.dark,
+        child: WebviewScaffold(
+          cookies: [
+            {'k': 'token', 'v': AppLoginManager.instance.loginModel.token},
+            {'k': 'identity', 'v': "${AppLoginManager.instance.loginModel.userType}"},
+            {'k': 'platform', 'v': "2"},
+          ],
+          userAgent: "|appVersion=1.0.2",
+          url: AppLoginManager.instance.configModel.h5Url.studentUrl,
+          /// js调用flutter
+          javascriptChannels: <JavascriptChannel>[
+            _baseJavascriptChannel(context),
+            _xianshengJavascriptChannel(context),
+            _avJavascriptChannel(context),
+          ].toSet(),
 
+        ),
     );
   }
 
