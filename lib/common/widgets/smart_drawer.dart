@@ -54,8 +54,14 @@ class _SmartDrawerState extends State<SmartDrawer> {
         label = widget.semanticLabel;
         break;
       case TargetPlatform.android:
+        label = widget.semanticLabel ?? MaterialLocalizations.of(context)?.drawerLabel;
+        break;
       case TargetPlatform.fuchsia:
         label = widget.semanticLabel ?? MaterialLocalizations.of(context)?.drawerLabel;
+        break;
+      case TargetPlatform.macOS:
+        // TODO: Handle this case.
+        break;
     }
     final double _width = MediaQuery.of(context).size.width * widget.widthPercent;
     return Semantics(
