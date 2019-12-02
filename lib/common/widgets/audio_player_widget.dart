@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dayuwen/common/color/color.dart';
 
+/// 播放状态
 enum PlayerState { stopped, playing, paused }
 
 ///
