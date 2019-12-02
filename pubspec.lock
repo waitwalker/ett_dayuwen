@@ -275,7 +275,7 @@ packages:
     description:
       path: "."
       ref: master
-      resolved-ref: "4e1aaf888a1fbb076c27574f239212023bf54737"
+      resolved-ref: "966d8859dd5aa8a73a7f75d117dcb79edc9efda4"
       url: "https://github.com/waitwalker/flutter_webview_plugin.git"
     source: git
     version: "0.3.9+1"
