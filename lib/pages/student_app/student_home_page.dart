@@ -85,7 +85,13 @@ class _StudentHomeState extends State<StudentHomePage> {
 
     if (method != null && method == "AV.playAVPlayMusicWithParmas") {
       if (argument != null) {
-        
+        Map data = argument["data"];
+        if (data != null) {
+          String type = data["type"];
+          String resouceUrl = data["resouceUrl"];
+          String abserveMethod = data["abserveMethod"];
+
+        }
       }
     }
 
