@@ -62,6 +62,10 @@ class _StudentHomeState extends State<StudentHomePage> {
       }
     });
 
+    flutterSound.onPlayerStateChanged.listen((state){
+      print("当前播放状态:$state");
+    });
+
 
     super.initState();
   }
@@ -77,6 +81,13 @@ class _StudentHomeState extends State<StudentHomePage> {
   _handleJSCall(Map parameter) {
     String method = parameter['method'];
     Map argument = parameter['argument'];
+    /// {method: AV.playAVPlayMusicWithParmas, argument: {"data":{"type":"localmp3","resouceUrl":"readrule","abserveMethod":"addObserverAVPlayerFinished"}}}
+
+    if (method != null && method == "AV.playAVPlayMusicWithParmas") {
+      if (argument != null) {
+        
+      }
+    }
 
   }
 
