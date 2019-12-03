@@ -90,6 +90,11 @@ class _StudentHomeState extends State<StudentHomePage> {
           String type = data["type"];
           String resouceUrl = data["resouceUrl"];
           String abserveMethod = data["abserveMethod"];
+          if (type != null && type == "localmp3") {
+            if (resouceUrl != null) {
+              String path = "lib/resouces/$resouceUrl.mp3";
+            }
+          }
 
         }
       }
@@ -97,7 +102,7 @@ class _StudentHomeState extends State<StudentHomePage> {
 
   }
 
-  void startPlayer() async{
+  void startPlayer(String path) async{
     try {
       String path = await flutterSound.startPlayer("");
       await flutterSound.setVolume(1.0);
