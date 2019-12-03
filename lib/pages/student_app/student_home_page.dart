@@ -93,6 +93,7 @@ class _StudentHomeState extends State<StudentHomePage> {
           if (type != null && type == "localmp3") {
             if (resouceUrl != null) {
               String path = "lib/resouces/$resouceUrl.mp3";
+              startPlayer(path);
             }
           }
 
