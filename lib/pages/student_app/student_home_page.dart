@@ -23,17 +23,17 @@ class _StudentHomeState extends State<StudentHomePage> {
   FlutterWebviewPlugin webviewPlugin = FlutterWebviewPlugin();
 
   FlutterSound flutterSound;
-  StreamSubscription _recorderSubscription;
-  StreamSubscription _dbPeakSubscription;
+//  StreamSubscription _recorderSubscription;
+//  StreamSubscription _dbPeakSubscription;
   StreamSubscription _playerSubscription;
 
   @override
   void initState() {
 
     flutterSound = FlutterSound();
-    flutterSound.setSubscriptionDuration(0.01);
-    flutterSound.setDbPeakLevelUpdate(0.8);
-    flutterSound.setDbLevelEnabled(true);
+//    flutterSound.setSubscriptionDuration(0.01);
+//    flutterSound.setDbPeakLevelUpdate(0.8);
+//    flutterSound.setDbLevelEnabled(true);
 
     /// 监听url地址变化
     webviewPlugin.onUrlChanged.listen((String url){
@@ -62,9 +62,10 @@ class _StudentHomeState extends State<StudentHomePage> {
       }
     });
 
-    flutterSound.onPlayerStateChanged.listen((state){
-      print("当前播放状态:$state");
-    });
+    /// 监听播放状态 这里需要看demo
+//    flutterSound.onPlayerStateChanged.listen((state){
+//      print("当前播放状态:$state");
+//    });
 
 
     super.initState();
