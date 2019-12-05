@@ -23,6 +23,7 @@ class _StudentHomeState extends State<StudentHomePage> {
 
   FlutterWebviewPlugin webviewPlugin = FlutterWebviewPlugin();
   IjkMediaController audioController = IjkMediaController();
+  String currentAbserveMethod;
 
   @override
   void initState() {
@@ -57,7 +58,19 @@ class _StudentHomeState extends State<StudentHomePage> {
 
     /// 监听播放状态
     audioController.videoInfoStream.listen((VideoInfo info){
-      print("当前播放状态");
+      print("当前播放状态:$info");
+      bool isPlaying = info.isPlaying;
+      /// 本地音频播放结束
+      if (isPlaying == false) {
+        ///NSString * json=[JSBUtil objToJsonString:@{@"method":info.method,@"callbackId":info.id,
+        ///                                           @"data":[JSBUtil objToJsonString: info.args]}];
+        ///[self evaluateJavaScript:[NSString stringWithFormat:@"window._handleMessageFromNative(%@)",json]
+        ///completionHandler:nil];
+        List data = [];
+        String json = jsonEncode(["method":])
+
+      }
+
     });
 
 
@@ -90,7 +103,7 @@ class _StudentHomeState extends State<StudentHomePage> {
           String abserveMethod = data["abserveMethod"].toString();
           if (type != null && type == "localmp3") {
             if (resouceUrl != null) {
-              String path = "lib/resouces/$resouceUrl.mp3";
+              String path = "lib/resources/rules/$resouceUrl.mp3";
               startPlayer(path);
             }
           }
@@ -112,7 +125,6 @@ class _StudentHomeState extends State<StudentHomePage> {
   void startPlayer(String path) async{
    await audioController.setAssetDataSource(path,autoPlay: true);
   }
-
 
 
   @override
