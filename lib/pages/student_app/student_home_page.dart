@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
@@ -9,6 +8,7 @@ import 'package:flutter_ijkplayer/flutter_ijkplayer.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
+import 'dart:convert';
 
 
 class StudentHomePage extends StatefulWidget {
@@ -47,11 +47,17 @@ class _StudentHomeState extends State<StudentHomePage> {
       print("X滚动距离:$offsetX");
     });
 
+    /// js 调用 flutter方法
     webviewPlugin.onJavascriptCalled.listen((Map parameter){
       print("onJavascriptCalled:$parameter");
       if (parameter != null) {
         _handleJSCall(parameter);
       }
+    });
+
+    /// 监听播放状态
+    audioController.videoInfoStream.listen((VideoInfo info){
+      print("当前播放状态");
     });
 
 
@@ -68,16 +74,20 @@ class _StudentHomeState extends State<StudentHomePage> {
   ///
   _handleJSCall(Map parameter) {
     String method = parameter['method'];
-    Map argument = parameter['argument'];
+    Map argument = jsonDecode(parameter['argument']);
+
+    print("argument:$argument");
+
     /// {method: AV.playAVPlayMusicWithParmas, argument: {"data":{"type":"localmp3","resouceUrl":"readrule","abserveMethod":"addObserverAVPlayerFinished"}}}
 
     if (method != null && method == "AV.playAVPlayMusicWithParmas") {
       if (argument != null) {
         Map data = argument["data"];
+        print("data:$data");
         if (data != null) {
           String type = data["type"];
-          String resouceUrl = data["resouceUrl"];
-          String abserveMethod = data["abserveMethod"];
+          String resouceUrl = data["resouceUrl"].toString();
+          String abserveMethod = data["abserveMethod"].toString();
           if (type != null && type == "localmp3") {
             if (resouceUrl != null) {
               String path = "lib/resouces/$resouceUrl.mp3";
