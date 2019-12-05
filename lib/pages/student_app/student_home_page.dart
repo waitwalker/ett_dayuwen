@@ -25,6 +25,39 @@ class _StudentHomeState extends State<StudentHomePage> {
   FlutterWebviewPlugin webviewPlugin = FlutterWebviewPlugin();
   IjkMediaController audioController = IjkMediaController();
   String currentAbserveMethod;
+  Timer countDownTimer;
+  double totalDuration;
+  double currentPosition;
+
+
+  ///
+  /// @name _startCountDownFunction
+  /// @description 倒计时
+  /// @parameters
+  /// @return
+  /// @author lca
+  /// @date 2019-11-25
+  ///
+  _startCountDownFunction() {
+    countDownTimer?.cancel();
+    countDownTimer = null;
+    countDownTimer = Timer.periodic(new Duration(seconds: 1), (t){
+
+    });
+  }
+
+  ///
+  /// @name _cancelCountDownTimer
+  /// @description 取消倒计时
+  /// @parameters
+  /// @return
+  /// @author lca
+  /// @date 2019-11-26
+  ///
+  _cancelCountDownTimer() {
+    countDownTimer.cancel();
+    countDownTimer = null;
+  }
 
   @override
   void initState() {
@@ -85,8 +118,29 @@ class _StudentHomeState extends State<StudentHomePage> {
     });
 
     audioController.ijkStatusStream.listen((IjkStatus ijkStatus){
+
       print("当前状态:$ijkStatus");
-      
+      VideoInfo videoInfo = audioController.videoInfo;
+
+      if (ijkStatus == IjkStatus.prepared) {
+
+      } else if (ijkStatus == IjkStatus.playing) {
+        Random random = Random();
+        List data = ["startPlayingNetworkMusic"];
+
+        String dataStr = jsonEncode(data);
+        String json = jsonEncode({
+          "method":"_hasJavascriptMethod",
+          "callbackId":random.nextInt(100),
+          "data":dataStr
+        });
+
+        print("json:$json");
+        webviewPlugin.evalJavascript("window._handleMessageFromNative($json)");
+
+      } else if (ijkStatus == IjkStatus.complete) {
+
+      }
 
     });
 
