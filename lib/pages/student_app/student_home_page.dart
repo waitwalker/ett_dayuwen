@@ -84,6 +84,12 @@ class _StudentHomeState extends State<StudentHomePage> {
 
     });
 
+    audioController.ijkStatusStream.listen((IjkStatus ijkStatus){
+      print("当前状态:$ijkStatus");
+      
+
+    });
+
 
     super.initState();
   }
@@ -122,7 +128,7 @@ class _StudentHomeState extends State<StudentHomePage> {
               };
               startPlayer(para);
             }
-          } else if (type != null && type == "localmp3") {
+          } else if (type != null && type == "netWork") {
             if (resouceUrl != null) {
               Map <String,String> para = {
                 "path":resouceUrl,
