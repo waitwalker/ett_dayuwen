@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
@@ -66,8 +67,18 @@ class _StudentHomeState extends State<StudentHomePage> {
         ///                                           @"data":[JSBUtil objToJsonString: info.args]}];
         ///[self evaluateJavaScript:[NSString stringWithFormat:@"window._handleMessageFromNative(%@)",json]
         ///completionHandler:nil];
+        Random random = Random();
         List data = [];
-        String json = jsonEncode(["method":])
+        
+        String dataStr = jsonEncode(data);
+        String json = jsonEncode({
+          "method":currentAbserveMethod,
+          "callbackId":random.nextInt(100),
+          "data":dataStr
+        });
+
+        print("json:$json");
+        webviewPlugin.evalJavascript("window._handleMessageFromNative($json)");
 
       }
 
@@ -92,6 +103,7 @@ class _StudentHomeState extends State<StudentHomePage> {
     print("argument:$argument");
 
     /// {method: AV.playAVPlayMusicWithParmas, argument: {"data":{"type":"localmp3","resouceUrl":"readrule","abserveMethod":"addObserverAVPlayerFinished"}}}
+    /// {method: AV.playAVPlayMusicWithParmas, argument: {"data":{"type":"netWork","resouceUrl":"http://cdn.yu-wen.com/course/audio/S1-S111-1.mp3","abserveMethod":"addObserverAVPlayerFinished","isRequirement":"1"}}}
 
     if (method != null && method == "AV.playAVPlayMusicWithParmas") {
       if (argument != null) {
@@ -100,11 +112,24 @@ class _StudentHomeState extends State<StudentHomePage> {
         if (data != null) {
           String type = data["type"];
           String resouceUrl = data["resouceUrl"].toString();
-          String abserveMethod = data["abserveMethod"].toString();
+          currentAbserveMethod = data["abserveMethod"].toString();
           if (type != null && type == "localmp3") {
             if (resouceUrl != null) {
               String path = "lib/resources/rules/$resouceUrl.mp3";
-              startPlayer(path);
+              Map <String,String> para = {
+                "path":path,
+                "resourceType":"local"
+              };
+              startPlayer(para);
+            }
+          } else if (type != null && type == "localmp3") {
+            if (resouceUrl != null) {
+              String path = "lib/resources/rules/$resouceUrl.mp3";
+              Map <String,String> para = {
+                "path":path,
+                "resourceType":"network"
+              };
+              startPlayer(para);
             }
           }
 
@@ -122,8 +147,10 @@ class _StudentHomeState extends State<StudentHomePage> {
   /// @author lca
   /// @date 2019-12-05
   ///
-  void startPlayer(String path) async{
-   await audioController.setAssetDataSource(path,autoPlay: true);
+  void startPlayer(Map parameter) async{
+    String resourceType = parameter["resourceType"];
+    
+    await audioController.setAssetDataSource(path,autoPlay: true);
   }
 
 
