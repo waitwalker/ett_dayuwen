@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dayuwen/common/redux/app_state.dart';
 import 'package:flutter_dayuwen/pages/login/app_login_manager.dart';
+import 'package:flutter_ijkplayer/flutter_ijkplayer.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
@@ -21,19 +22,10 @@ class _StudentHomeState extends State<StudentHomePage> {
 
 
   FlutterWebviewPlugin webviewPlugin = FlutterWebviewPlugin();
-
-  FlutterSound flutterSound;
-//  StreamSubscription _recorderSubscription;
-//  StreamSubscription _dbPeakSubscription;
-  StreamSubscription _playerSubscription;
+  IjkMediaController audioController = IjkMediaController();
 
   @override
   void initState() {
-
-    flutterSound = FlutterSound();
-//    flutterSound.setSubscriptionDuration(0.01);
-//    flutterSound.setDbPeakLevelUpdate(0.8);
-//    flutterSound.setDbLevelEnabled(true);
 
     /// 监听url地址变化
     webviewPlugin.onUrlChanged.listen((String url){
@@ -61,11 +53,6 @@ class _StudentHomeState extends State<StudentHomePage> {
         _handleJSCall(parameter);
       }
     });
-
-    /// 监听播放状态 这里需要看demo
-//    flutterSound.onPlayerStateChanged.listen((state){
-//      print("当前播放状态:$state");
-//    });
 
 
     super.initState();
@@ -105,19 +92,7 @@ class _StudentHomeState extends State<StudentHomePage> {
   }
 
   void startPlayer(String path) async{
-    try {
-      String path = await flutterSound.startPlayer("");
-      await flutterSound.setVolume(1.0);
-      print('startPlayer: $path');
 
-      _playerSubscription = flutterSound.onPlayerStateChanged.listen((e) {
-        if (e != null) {
-
-        }
-      });
-    } catch (err) {
-      print('error: $err');
-    }
   }
 
 
