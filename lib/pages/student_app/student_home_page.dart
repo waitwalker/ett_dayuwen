@@ -91,8 +91,16 @@ class _StudentHomeState extends State<StudentHomePage> {
 
   }
 
+  ///
+  /// @name startPlayer
+  /// @description 播放应用内资源
+  /// @parameters
+  /// @return
+  /// @author lca
+  /// @date 2019-12-05
+  ///
   void startPlayer(String path) async{
-
+   await audioController.setAssetDataSource(path,autoPlay: true);
   }
 
 
