@@ -28,6 +28,7 @@ class _StudentHomeState extends State<StudentHomePage> {
   Timer countDownTimer;
   double totalDuration;
   double currentPosition;
+  int count = 1;
 
 
   ///
@@ -38,11 +39,22 @@ class _StudentHomeState extends State<StudentHomePage> {
   /// @author lca
   /// @date 2019-11-25
   ///
-  _startCountDownFunction() {
+  _startCountDownFunction(double current, double total) {
     countDownTimer?.cancel();
     countDownTimer = null;
     countDownTimer = Timer.periodic(new Duration(seconds: 1), (t){
+      Random random = Random();
+      List data = ["addObserverAVPlayerTimeWithCurrentTime"];
 
+      String dataStr = jsonEncode(data);
+      String json = jsonEncode({
+        "method":"_hasJavascriptMethod",
+        "callbackId":random.nextInt(100),
+        "data":dataStr
+      });
+
+      print("json:$json");
+      webviewPlugin.evalJavascript("window._handleMessageFromNative($json)");
     });
   }
 
@@ -125,21 +137,26 @@ class _StudentHomeState extends State<StudentHomePage> {
       if (ijkStatus == IjkStatus.prepared) {
 
       } else if (ijkStatus == IjkStatus.playing) {
-        Random random = Random();
-        List data = ["startPlayingNetworkMusic"];
+        if (count == 1) {
+          Random random = Random();
+          List data = ["startPlayingNetworkMusic"];
 
-        String dataStr = jsonEncode(data);
-        String json = jsonEncode({
-          "method":"_hasJavascriptMethod",
-          "callbackId":random.nextInt(100),
-          "data":dataStr
-        });
+          String dataStr = jsonEncode(data);
+          String json = jsonEncode({
+            "method":"_hasJavascriptMethod",
+            "callbackId":random.nextInt(100),
+            "data":dataStr
+          });
 
-        print("json:$json");
-        webviewPlugin.evalJavascript("window._handleMessageFromNative($json)");
+          print("json:$json");
+          webviewPlugin.evalJavascript("window._handleMessageFromNative($json)");
+          _startCountDownFunction(videoInfo.currentPosition,videoInfo.duration);
+          count = count + 1;
+        }
 
       } else if (ijkStatus == IjkStatus.complete) {
-
+        count = 1;
+        _cancelCountDownTimer();
       }
 
     });
@@ -188,6 +205,7 @@ class _StudentHomeState extends State<StudentHomePage> {
                 "path":resouceUrl,
                 "resourceType":"network"
               };
+              count = 1;
               startPlayer(para);
             }
           }
