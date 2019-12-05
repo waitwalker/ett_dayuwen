@@ -104,6 +104,7 @@ class _StudentHomeState extends State<StudentHomePage> {
   }
 
 
+
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
@@ -125,6 +126,7 @@ class _StudentHomeState extends State<StudentHomePage> {
   void dispose() {
     /// 释放
     webviewPlugin.close();
+    audioController.dispose();
     super.dispose();
   }
 }
