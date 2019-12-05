@@ -124,9 +124,8 @@ class _StudentHomeState extends State<StudentHomePage> {
             }
           } else if (type != null && type == "localmp3") {
             if (resouceUrl != null) {
-              String path = "lib/resources/rules/$resouceUrl.mp3";
               Map <String,String> para = {
-                "path":path,
+                "path":resouceUrl,
                 "resourceType":"network"
               };
               startPlayer(para);
@@ -149,8 +148,13 @@ class _StudentHomeState extends State<StudentHomePage> {
   ///
   void startPlayer(Map parameter) async{
     String resourceType = parameter["resourceType"];
-    
-    await audioController.setAssetDataSource(path,autoPlay: true);
+    String path = parameter["path"];
+    if (resourceType == "local") {
+      await audioController.setAssetDataSource(path,autoPlay: true);
+    } else if (resourceType == "network") {
+      await audioController.setNetworkDataSource(path,autoPlay: true);
+    }
+
   }
 
 
