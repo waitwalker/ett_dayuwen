@@ -179,6 +179,7 @@ class _StudentHomeState extends State<StudentHomePage> {
 
     print("argument:$argument");
 
+    /// 返回的参数
     /// {method: AV.playAVPlayMusicWithParmas, argument: {"data":{"type":"localmp3","resouceUrl":"readrule","abserveMethod":"addObserverAVPlayerFinished"}}}
     /// {method: AV.playAVPlayMusicWithParmas, argument: {"data":{"type":"netWork","resouceUrl":"http://cdn.yu-wen.com/course/audio/S1-S111-1.mp3","abserveMethod":"addObserverAVPlayerFinished","isRequirement":"1"}}}
 
