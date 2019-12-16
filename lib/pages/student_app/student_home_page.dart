@@ -129,6 +129,7 @@ class _StudentHomeState extends State<StudentHomePage> {
 
     });
 
+    /// 监听播放状态
     audioController.ijkStatusStream.listen((IjkStatus ijkStatus){
 
       print("当前状态:$ijkStatus");
@@ -233,7 +234,6 @@ class _StudentHomeState extends State<StudentHomePage> {
     } else if (resourceType == "network") {
       await audioController.setNetworkDataSource(path,autoPlay: true);
     }
-
   }
 
 
