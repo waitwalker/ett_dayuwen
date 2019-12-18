@@ -132,6 +132,7 @@ class _StudentHomeState extends State<StudentHomePage> {
     /// 监听播放状态
     audioController.ijkStatusStream.listen((IjkStatus ijkStatus){
 
+      /// 当前播放状态
       print("当前状态:$ijkStatus");
       VideoInfo videoInfo = audioController.videoInfo;
 
