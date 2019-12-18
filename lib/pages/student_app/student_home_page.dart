@@ -84,7 +84,6 @@ class _StudentHomeState extends State<StudentHomePage> {
       print("页面状态改变:${stateChanged.type}");
     });
 
-
     /// 监听Webview滚动
     webviewPlugin.onScrollYChanged.listen((double offsetY) {
       print("Y滚动距离:$offsetY");
@@ -129,8 +128,10 @@ class _StudentHomeState extends State<StudentHomePage> {
 
     });
 
+    /// 监听播放状态
     audioController.ijkStatusStream.listen((IjkStatus ijkStatus){
 
+      /// 当前播放状态
       print("当前状态:$ijkStatus");
       VideoInfo videoInfo = audioController.videoInfo;
 
@@ -233,7 +234,6 @@ class _StudentHomeState extends State<StudentHomePage> {
     } else if (resourceType == "network") {
       await audioController.setNetworkDataSource(path,autoPlay: true);
     }
-
   }
 
 
