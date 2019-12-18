@@ -84,7 +84,6 @@ class _StudentHomeState extends State<StudentHomePage> {
       print("页面状态改变:${stateChanged.type}");
     });
 
-
     /// 监听Webview滚动
     webviewPlugin.onScrollYChanged.listen((double offsetY) {
       print("Y滚动距离:$offsetY");
