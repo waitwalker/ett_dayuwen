@@ -73,6 +73,7 @@ dependencies:
 
   intl: ^0.16.0
 
+  # 录音
   flutter_sound: ^1.5.2
 
   permission_handler: ^3.2.2
