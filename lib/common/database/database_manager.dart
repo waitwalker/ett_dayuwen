@@ -221,8 +221,6 @@ class DataBaseManager {
     Database db = await DataBaseManager.instance.database;
     await db.close();
   }
-
-
 }
 
 ///
